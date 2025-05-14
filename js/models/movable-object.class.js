@@ -4,17 +4,24 @@ class MovableObject {
     height = 250;
     width = 150;
     img;
+    imageCache = {}; //für animations
 
-    loadImage(path){
+    loadImage(path) {
         this.img = new Image(); //vorgefertigt
-        this.img.src = path; 
+        this.img.src = path;
     }
 
-    moveRight(){
-    console.log('move right');
+    loadImages(arr) {
+        arr.forEach((path) => {
+            let img = new Image();// kreiert neues Bild
+            img.src = path; //Abfrage nach URL
+            this.imageCache[path] = img; //Zugriff auf imageCache JSON
+        });
     }
 
-    moveLeft(){
-        
+    moveRight() {
+        console.log("move right");
     }
+
+    moveLeft() {}
 }
