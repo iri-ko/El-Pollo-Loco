@@ -30,7 +30,7 @@ class World {
         setTimeout(() => this.draw(), 100);
         this.keyboard = keyboard;
         this.canvas = canvas;
-        this.setWorld();
+        this.setWorld(keyboard);
     }
 
     setWorld() {

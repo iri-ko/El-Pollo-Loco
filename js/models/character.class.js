@@ -9,6 +9,7 @@ class Character extends MovableObject {
     ];
     world;
 
+
     //for creating new Image
     constructor() {
         super();
@@ -19,16 +20,30 @@ class Character extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
 
+        setInterval(() => {
             if (this.world.keyboard.RIGHT){
+            this.x += 10; //speed for moving
+            }
+        }, 1000 / 60) //different framerate for other interval
+
+        
+        setInterval(() => {
+            if (this.world.keyboard.LEFT){
+            this.x -= 10; //speed for moving
+            }
+        }, 1000 / 60) //different framerate for other interval
+
+        setInterval(() => {
+            // Lauf-Animation
+            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT){
              let i = this.currentImage % this.IMAGES_WALKING.length; //sobald durch Array durchrotiert ist, springt currentImage zurück auf 0
             let path = this.IMAGES_WALKING[i]; //nimmt jeweils das, was
             this.img = this.imageCache[path];
             this.currentImage++;   
             }
             
-        }, 100);
+        }, 50);
     }
 
     jump() {}
