@@ -6,6 +6,7 @@ class MovableObject {
     img;
     imageCache = {}; //für animations
     currentImage = 0;
+    speed = 0.15;
 
     loadImage(path) {
         this.img = new Image(); //vorgefertigt
@@ -25,4 +26,11 @@ class MovableObject {
     }
 
     moveLeft() {}
+
+    
+    moveLeft(){
+        setInterval(() => {
+            this.x -= this.speed // X gets reduced by 5 according to set time
+        }, 1000 / 60) //set time
+    }
 }
