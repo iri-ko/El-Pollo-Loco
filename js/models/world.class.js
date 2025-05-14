@@ -1,8 +1,6 @@
 class World {
     character = new Character();
-    enemies = level1.enemies;
-    clouds = level1.clouds;
-    backgroundObjects = level1.backgroundObjects;
+    level = level1;
 
     ctx;
     canvas;
@@ -26,14 +24,14 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.backgroundObjects);
+        this.addObjectsToMap(this.level.backgroundObjects);
 
         this.addToMap(this.character);
         //zugriff auf Bild und Koordinaten vom Charakter)
 
-        this.addObjectsToMap(this.enemies); //kreiert Wolken
+        this.addObjectsToMap(this.level.enemies); //kreiert Wolken
 
-        this.addObjectsToMap(this.clouds); //kreiert Wolken
+        this.addObjectsToMap(this.level.clouds); //kreiert Wolken
 
         this.ctx.translate(-this.camera_x, 0);
 

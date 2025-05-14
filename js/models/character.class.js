@@ -22,16 +22,18 @@ class Character extends MovableObject {
     animate() {
 
         setInterval(() => {
-            if (this.world.keyboard.RIGHT){
+
+            //check welcher Knofp gedrückt und das Charakter nicht weiter läuft (zum Ändern gehe zu Level.class)
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x){
             this.x += 10; //speed for moving
             this.otherDirection = false; //Char img spiegelt nicht bei rechts
             }
 
-            if (this.world.keyboard.LEFT){
+            if (this.world.keyboard.LEFT && this.x > 0 ){
             this.x -= 10; //speed for moving
             this.otherDirection = true;
             }
-            this.world.camera_x = -this.x;
+            this.world.camera_x = -this.x + 100;
         }, 1000 / 60) //different framerate for other interval
 
 
