@@ -24,6 +24,7 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.world.keyboard.RIGHT){
             this.x += 10; //speed for moving
+            this.otherDirection = false;
             }
         }, 1000 / 60) //different framerate for other interval
 
@@ -31,6 +32,7 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.world.keyboard.LEFT){
             this.x -= 10; //speed for moving
+            this.otherDirection = true;
             }
         }, 1000 / 60) //different framerate for other interval
 

@@ -7,6 +7,7 @@ class MovableObject {
     imageCache = {}; //für animations
     currentImage = 0;
     speed = 0.15;
+    otherDirection = false; //für Spiegeln beim links/rechts laufen
 
     loadImage(path) {
         this.img = new Image(); //vorgefertigt
