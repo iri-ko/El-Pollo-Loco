@@ -1,8 +1,8 @@
 class MovableObject {
     x = 70; //PLatzierung von CHarakter und Enemies
-    y = 150;
+    y = 200;
     height = 250;
-    width = 100;
+    width = 150;
     img;
 
     loadImage(path){
