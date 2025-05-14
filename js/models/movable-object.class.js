@@ -1,5 +1,5 @@
 class MovableObject {
-    x = 70; //PLatzierung von CHarakter und Enemies
+    x = 100; //PLatzierung von CHarakter und Enemies
     y = 200;
     height = 250;
     width = 150;

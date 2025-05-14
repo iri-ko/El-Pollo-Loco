@@ -26,15 +26,14 @@ class Character extends MovableObject {
             this.x += 10; //speed for moving
             this.otherDirection = false; //Char img spiegelt nicht bei rechts
             }
-        }, 1000 / 60) //different framerate for other interval
 
-        
-        setInterval(() => {
             if (this.world.keyboard.LEFT){
             this.x -= 10; //speed for moving
             this.otherDirection = true;
             }
+            this.world.camera_x = -this.x;
         }, 1000 / 60) //different framerate for other interval
+
 
         setInterval(() => {
             // Lauf-Animation
