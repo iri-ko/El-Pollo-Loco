@@ -17,11 +17,6 @@ class Cloud extends MovableObject{
         this.moveLeft();
     }
 
-    moveLeft(){
-        setInterval(() => {
-            this.x -= this.speed // X gets reduced by 5 according to set time
-        }, 1000 / 60) //set time
-    }
 
 
 }
