@@ -24,11 +24,7 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.world.keyboard.RIGHT){
             this.x += 10; //speed for moving
-            this.otherDirection = false;
-
-            //Kamera bewegt sich mit Character
-            this.world.camera_x += (this.world.camera_x - this.x) * 0.015;
-
+            this.otherDirection = false; //Char img spiegelt nicht bei rechts
             }
         }, 1000 / 60) //different framerate for other interval
 
@@ -37,10 +33,6 @@ class Character extends MovableObject {
             if (this.world.keyboard.LEFT){
             this.x -= 10; //speed for moving
             this.otherDirection = true;
-
-            //Kamera bewegt sich mit Character
-            this.world.camera_x -= (this.world.camera_x - this.x) * 0.015;
-
             }
         }, 1000 / 60) //different framerate for other interval
 
