@@ -7,48 +7,109 @@ class Character extends MovableObject {
         "assets/img/2_character_pepe/2_walk/W-25.png",
         "assets/img/2_character_pepe/2_walk/W-26.png",
     ];
+
+    IMAGES_IDLE = [
+        "assets/img/2_character_pepe/1_idle/idle/I-1.png",
+        "assets/img/2_character_pepe/1_idle/idle/I-2.png",
+        "assets/img/2_character_pepe/1_idle/idle/I-3.png",
+        "assets/img/2_character_pepe/1_idle/idle/I-4.png",
+        "assets/img/2_character_pepe/1_idle/idle/I-5.png",
+        "assets/img/2_character_pepe/1_idle/idle/I-6.png",
+        "assets/img/2_character_pepe/1_idle/idle/I-7.png",
+        "assets/img/2_character_pepe/1_idle/idle/I-8.png",
+        "assets/img/2_character_pepe/1_idle/idle/I-9.png",
+        "assets/img/2_character_pepe/1_idle/idle/I-10.png",
+    ];
+
+    IMAGES_IDLE_LONG = [
+        "assets/img/2_character_pepe/1_idle/long_idle/I-11.png",
+        "assets/img/2_character_pepe/1_idle/long_idle/I-12.png",
+        "assets/img/2_character_pepe/1_idle/long_idle/I-13.png",
+        "assets/img/2_character_pepe/1_idle/long_idle/I-14.png",
+        "assets/img/2_character_pepe/1_idle/long_idle/I-15.png",
+        "assets/img/2_character_pepe/1_idle/long_idle/I-16.png",
+        "assets/img/2_character_pepe/1_idle/long_idle/I-17.png",
+        "assets/img/2_character_pepe/1_idle/long_idle/I-18.png",
+        "assets/img/2_character_pepe/1_idle/long_idle/I-19.png",
+        "assets/img/2_character_pepe/1_idle/long_idle/I-20.png",
+    ];
+
     world;
+    currentImage = 0;
 
-
-    //for creating new Image
     constructor() {
         super();
-        this.loadImage("assets/img/2_character_pepe/2_walk/W-21.png"); //super übergeordnete FUnkiton -> MovalbeObject
+        this.loadImage("assets/img/2_character_pepe/2_walk/W-21.png");
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_IDLE);
+        this.loadImages(this.IMAGES_IDLE_LONG);
 
         this.animate();
     }
 
     animate() {
-
+        // #region walking animation
         setInterval(() => {
-
-            //check welcher Knofp gedrückt und das Charakter nicht weiter läuft (zum Ändern gehe zu Level.class)
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x){
-            this.x += 10; //speed for moving
-            this.otherDirection = false; //Char img spiegelt nicht bei rechts
+            if (
+                this.world.keyboard.RIGHT &&
+                this.x < this.world.level.level_end_x
+            ) {
+                this.x += 10;
+                this.otherDirection = false;
             }
 
-            if (this.world.keyboard.LEFT && this.x > 0 ){
-            this.x -= 10; //speed for moving
-            this.otherDirection = true;
+            if (this.world.keyboard.LEFT && this.x > 0) {
+                this.x -= 10;
+                this.otherDirection = true;
             }
+
             this.world.camera_x = -this.x + 100;
-        }, 1000 / 60) //different framerate for other interval
-
+        }, 1000 / 60);
 
         setInterval(() => {
-            // Lauf-Animation
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT){
-             let i = this.currentImage % this.IMAGES_WALKING.length; //sobald durch Array durchrotiert ist, springt currentImage zurück auf 0
-            let path = this.IMAGES_WALKING[i]; //nimmt jeweils das, was
-            this.img = this.imageCache[path];
-            this.currentImage++;   
+            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                let i = this.currentImage % this.IMAGES_WALKING.length;
+                let path = this.IMAGES_WALKING[i];
+                this.img = this.imageCache[path];
+                this.currentImage++;
             }
-            
-
         }, 50);
-    }
 
-    jump() {}
+        //#endregion
+
+        //#region Idle animations
+
+        let lastActivityTime = Date.now(); // Store last key press time
+
+        setInterval(() => {
+            if (
+                !this.world.keyboard.RIGHT &&
+                !this.world.keyboard.LEFT &&
+                !this.world.keyboard.UP &&
+                !this.world.keyboard.DOWN &&
+                !this.world.keyboard.SPACE
+                //checks if no key was pressed
+            ) {
+                let currentTime = Date.now(); //now checks current time
+                let timeElapsed = currentTime - lastActivityTime; //checks how much time since any activity was detected)
+
+                if (timeElapsed >= 7000) {//if 7 seconds have passed, play long idle animation
+                    let i = this.currentImage % this.IMAGES_IDLE_LONG.length;
+                    let path = this.IMAGES_IDLE_LONG[i];
+                    this.img = this.imageCache[path];
+                } else {
+                    // Otherwise, play normal idle animation
+                    let i = this.currentImage % this.IMAGES_IDLE.length;
+                    let path = this.IMAGES_IDLE[i];
+                    this.img = this.imageCache[path];
+                }
+
+                this.currentImage++;
+            } else {
+                lastActivityTime = Date.now(); // Reset timer when key is pressed
+            }
+        }, 200);
+
+        //#endregion
+    }
 }

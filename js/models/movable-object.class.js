@@ -30,4 +30,12 @@ class MovableObject {
             this.x -= this.speed // X gets reduced by 5 according to set time
         }, 1000 / 60) //set time
     }
+
+    playAnimation(images) {
+    let i = this.currentImage % images.length; // Ensure looping through the array
+    let path = images[i]; // Use passed array, not a missing property
+    this.img = this.imageCache[path]; // Retrieve cached image
+    this.currentImage++;
+}
+
 }
