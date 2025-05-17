@@ -36,6 +36,9 @@ class Character extends MovableObject {
 
     world;
     currentImage = 0;
+    y = 80
+    speedY = 0;
+    acceleration = 2;
 
     constructor() {
         super();
@@ -45,6 +48,21 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_IDLE_LONG);
 
         this.animate();
+        this.applyGravity();
+    }
+
+    applyGravity(){
+        //damit Pepe runterfällt
+        setInterval( () => {
+            if (this.isAboveGround()){
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+        }, 1000 / 25)
+    }
+
+    isAboveGround(){
+        return this.y < 190;
     }
 
     animate() {
