@@ -34,10 +34,21 @@ class Character extends MovableObject {
         "assets/img/2_character_pepe/1_idle/long_idle/I-20.png",
     ];
 
+    IMAGES_JUMPING = [
+        "assets/img/2_character_pepe/3_jump/J-31.png",
+        "assets/img/2_character_pepe/3_jump/J-32.png",
+        "assets/img/2_character_pepe/3_jump/J-33.png",
+        "assets/img/2_character_pepe/3_jump/J-34.png",
+        "assets/img/2_character_pepe/3_jump/J-35.png",
+        "assets/img/2_character_pepe/3_jump/J-36.png",
+        "assets/img/2_character_pepe/3_jump/J-37.png",
+        "assets/img/2_character_pepe/3_jump/J-38.png",
+        "assets/img/2_character_pepe/3_jump/J-39.png",
+    ]
+
     world;
     currentImage = 0;
     y = 80
-    speedY = 0;
     acceleration = 2;
 
     constructor() {
@@ -46,6 +57,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_IDLE_LONG);
+        this.loadImages(this.IMAGES_JUMPING)
 
         this.animate();
         this.applyGravity();
@@ -54,7 +66,7 @@ class Character extends MovableObject {
     applyGravity(){
         //damit Pepe runterfällt
         setInterval( () => {
-            if (this.isAboveGround()){
+            if (this.isAboveGround() || this.speedY > 0){
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
@@ -72,35 +84,30 @@ class Character extends MovableObject {
                 this.world.keyboard.RIGHT &&
                 this.x < this.world.level.level_end_x
             ) {
-                this.x += 10;
-                this.otherDirection = false;
+                this.walkRight()
             }
 
             if (this.world.keyboard.LEFT && this.x > 0) {
-                this.x -= 10;
-                this.otherDirection = true;
+                this.walkLeft()
             }
 
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                let i = this.currentImage % this.IMAGES_WALKING.length;
-                let path = this.IMAGES_WALKING[i];
-                this.img = this.imageCache[path];
-                this.currentImage++;
+            if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround()) {
+                this.playAnimation(this.IMAGES_WALKING)
             }
         }, 50);
 
         //#endregion
 
-        //#region Idle animations
-
-        let lastActivityTime = Date.now(); // Store last key press time
-
+        //#region jump animations
         setInterval(() => {
-            if (
+            if (this.isAboveGround()) {
+            this.playAnimation(this.IMAGES_JUMPING);
+            } else {
+                if (
                 !this.world.keyboard.RIGHT &&
                 !this.world.keyboard.LEFT &&
                 !this.world.keyboard.UP &&
@@ -112,21 +119,59 @@ class Character extends MovableObject {
                 let timeElapsed = currentTime - lastActivityTime; //checks how much time since any activity was detected)
 
                 if (timeElapsed >= 7000) {//if 7 seconds have passed, play long idle animation
-                    let i = this.currentImage % this.IMAGES_IDLE_LONG.length;
-                    let path = this.IMAGES_IDLE_LONG[i];
-                    this.img = this.imageCache[path];
+                this.playAnimation(this.IMAGES_IDLE_LONG);
                 } else {
                     // Otherwise, play normal idle animation
-                    let i = this.currentImage % this.IMAGES_IDLE.length;
-                    let path = this.IMAGES_IDLE[i];
-                    this.img = this.imageCache[path];
+                this.playAnimation(this.IMAGES_IDLE);
                 }
 
                 this.currentImage++;
             } else {
                 lastActivityTime = Date.now(); // Reset timer when key is pressed
             }
-        }, 200);
+            }
+
+            //Jump only when pressed up and Pepe is on the ground (or not above the ground)
+            if (this.world.keyboard.SPACE && !this.isAboveGround()){
+                this.jump();                
+            }
+    
+        }, 100);
+        //#endregion
+
+        //#region Idle animations
+
+        let lastActivityTime = Date.now(); // Store last key press time
+
+        setInterval(() => {
+    if (this.isAboveGround()) { 
+        this.playAnimation(this.IMAGES_JUMPING);
+    } else {
+        if (
+            !this.world.keyboard.RIGHT &&
+            !this.world.keyboard.LEFT &&
+            !this.world.keyboard.UP &&
+            !this.world.keyboard.DOWN &&
+            !this.world.keyboard.SPACE
+        ) {
+            let currentTime = Date.now();
+            let timeElapsed = currentTime - lastActivityTime;
+
+            if (timeElapsed >= 7000) {
+                this.playAnimation(this.IMAGES_IDLE_LONG);
+            } else {
+                this.playAnimation(this.IMAGES_IDLE);
+            }
+        } 
+        this.currentImage++;
+    }
+
+    if (this.world.keyboard.UP && !this.isAboveGround()) {
+        this.speedY = 20;
+    }
+
+}, 200);
+
 
         //#endregion
     }
