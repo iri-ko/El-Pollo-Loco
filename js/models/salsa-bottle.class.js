@@ -4,10 +4,10 @@ class SalsaBottle extends MovableObject {
         super();
         this.loadImage('assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png'); //super übergeordnete FUnkiton -> MovalbeObject
         
-        this.x = 50 + Math.random() * 800;
+        this.x = 49 + Math.random() * 1500;
         this.y = 360;
-        this.height = 30;
-        this.width = 30;
+        this.height = 80;
+        this.width = 80;
     }
     
 }

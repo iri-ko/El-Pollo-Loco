@@ -24,21 +24,23 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
 
+        this.addObjectsToMap(this.level.salsaBottles);
+        this.addObjectsToMap(this.level.coins);
+        
         this.addObjectsToMap(this.level.backgroundObjects);
 
         //zugriff auf Bild und Koordinaten vom Charakter)
 
         this.addObjectsToMap(this.level.clouds); //kreiert Wolken
 
-        this.addObjectsToMap(this.level.coins);
-
-        this.addObjectsToMap(this.level.salsaBottles);
 
         this.addObjectsToMap(this.level.enemies); //kreiert Gegner
 
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0);
+
+        
 
         
         let self = this;
