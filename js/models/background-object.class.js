@@ -4,7 +4,6 @@ class BackgroundObject extends MovableObject {
 
     constructor(imagePath, x){
         super(); //zugriff auf MovableObject
-
         this.loadImage(imagePath);
         this.y = 480 - this.height; //setzt images immer ganz nach unten, je nach Höhe)
         this.x = x;

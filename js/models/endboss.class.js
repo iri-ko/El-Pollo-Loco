@@ -1,6 +1,6 @@
 class Endboss extends MovableObject {
     
-    IMAGES_WALKING = [
+    IMAGES_ALERT = [
         "assets/img/4_enemie_boss_chicken/2_alert/G5.png",
         "assets/img/4_enemie_boss_chicken/2_alert/G6.png",
         "assets/img/4_enemie_boss_chicken/2_alert/G7.png",
@@ -15,7 +15,7 @@ class Endboss extends MovableObject {
     constructor(){
         super();
         this.loadImage('assets/img/4_enemie_boss_chicken/1_walk/G1.png'); //super übergeordnete FUnkiton -> MovalbeObject
-    this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_ALERT);
 
         this.x = 1500 + Math.random() * 300;
         this.y = 60;
@@ -29,7 +29,7 @@ class Endboss extends MovableObject {
 
     animate() {
     setInterval(() => {
-        this.playAnimation(this.IMAGES_WALKING); // Pass the correct array
+        this.playAnimation(this.IMAGES_ALERT); // Pass the correct array
     }, 100);
 }
 

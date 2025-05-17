@@ -26,15 +26,21 @@ class World {
 
         this.addObjectsToMap(this.level.backgroundObjects);
 
-        this.addToMap(this.character);
         //zugriff auf Bild und Koordinaten vom Charakter)
-
-        this.addObjectsToMap(this.level.enemies); //kreiert Wolken
 
         this.addObjectsToMap(this.level.clouds); //kreiert Wolken
 
+        this.addObjectsToMap(this.level.coins);
+
+        this.addObjectsToMap(this.level.salsaBottles);
+
+        this.addObjectsToMap(this.level.enemies); //kreiert Gegner
+
+        this.addToMap(this.character);
+
         this.ctx.translate(-this.camera_x, 0);
 
+        
         let self = this;
         //draw() wird immer wieder ausgeführt
         requestAnimationFrame(function () {
