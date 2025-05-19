@@ -10,6 +10,15 @@ class MovableObject {
     otherDirection = false; //für Spiegeln beim links/rechts laufen
     speedY = 0;
 
+    constructor() {
+        this.x = 100;
+        this.y = 200;
+        this.width = 150;
+        this.height = 250;
+        this.img;
+        this.speed = 0.15;
+    }
+
     loadImage(path) {
         this.img = new Image(); //vorgefertigt
         this.img.src = path;
@@ -21,6 +30,18 @@ class MovableObject {
             img.src = path; //Abfrage nach URL
             this.imageCache[path] = img; //Zugriff auf imageCache JSON
         });
+    }
+
+    drawObject(ctx){
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+    }
+
+    drawHitbox(ctx){
+        ctx.beginPath();
+        ctx.lineWidth = "2";
+        ctx.strokeStyle = "blue";
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.stroke();
     }
 
     walkRight() {

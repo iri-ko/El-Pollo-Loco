@@ -1,3 +1,8 @@
+/**
+ * Create a new Character
+ * @class
+ */
+
 class Character extends MovableObject {
     IMAGES_WALKING = [
         "assets/img/2_character_pepe/2_walk/W-21.png",
@@ -48,9 +53,10 @@ class Character extends MovableObject {
 
     world;
     currentImage = 0;
-    y = 80
+    y = 200
     acceleration = 2;
 
+ 
     constructor() {
         super();
         this.loadImage("assets/img/2_character_pepe/2_walk/W-21.png");

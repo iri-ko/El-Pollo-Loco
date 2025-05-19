@@ -4,7 +4,7 @@ class Cloud extends MovableObject{
     
         constructor(){
         super();
-        this.loadImage('../assets/img/5_background/layers/4_clouds/1.png'); //super übergeordnete FUnkiton -> MovalbeObject
+        this.loadImage('../assets/img/5_background/layers/4_clouds/w1.png'); //super übergeordnete FUnkiton -> MovalbeObject
 
         this.y = 20;
         this.width = 500;

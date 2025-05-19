@@ -18,7 +18,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ALERT);
 
         this.x = 1500 + Math.random() * 300;
-        this.y = 60;
+        this.y = 100;
         this.height = 400;
         this.width = 500;
         this.speed = 1 + Math.random() * 0.25;
