@@ -44,6 +44,21 @@ class World {
         requestAnimationFrame(function () {
             self.draw(); //this geht hier nicht mehr -> deswegen oben self als this definiert und hier unten statt this verwendet
         });
+        this.checkCollisions();
+    }
+
+    checkCollisions(){
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                
+                if(this.character.isColling(enemy)){
+                    console.log('Collision!');
+                    
+                };
+                
+                
+            });
+        }, 200);
     }
 
     addObjectsToMap(objects) {
@@ -58,7 +73,8 @@ class World {
         }
 
         mo.drawObject(this.ctx);
-        mo.drawHitbox(this.ctx);
+        mo.drawFrame(this.ctx);
+        mo.drawHitbox(this.ctx)
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

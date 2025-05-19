@@ -10,6 +10,8 @@ class MovableObject {
     otherDirection = false; //für Spiegeln beim links/rechts laufen
     speedY = 0;
 
+    offeset;
+
     constructor() {
         this.x = 100;
         this.y = 200;
@@ -17,6 +19,8 @@ class MovableObject {
         this.height = 250;
         this.img;
         this.speed = 0.15;
+
+        this.offset = { top: 0, bottom: 0, left: 0, right: 0 };
     }
 
     loadImage(path) {
@@ -32,17 +36,44 @@ class MovableObject {
         });
     }
 
-    drawObject(ctx){
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+    drawObject(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-    drawHitbox(ctx){
-        ctx.beginPath();
-        ctx.lineWidth = "2";
-        ctx.strokeStyle = "blue";
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.stroke();
+    drawFrame(ctx) {
+        if (this instanceof Character || this instanceof Chicken) {
+            ctx.beginPath();
+            ctx.lineWidth = "2";
+            ctx.strokeStyle = "blue";
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
     }
+
+    drawHitbox(ctx) {
+        if (this instanceof Character || this instanceof Chicken) {
+            ctx.beginPath();
+            ctx.lineWidth = "2";
+            ctx.strokeStyle = "red";
+            ctx.rect(
+                this.x + this.offset.left,
+                this.y + this.offset.top,
+                this.width - this.offset.left - this.offset.right,
+                this.height - this.offset.top - this.offset.bottom
+            );
+            ctx.stroke();
+        }
+    }
+
+    isColling(mo) {
+    return (
+        this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+        this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+        this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
+        this.y + this.height - this.offset.bottom > mo.y + mo.offset.top
+    );
+}
+
 
     walkRight() {
         this.x += 10;

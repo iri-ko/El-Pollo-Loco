@@ -1,4 +1,5 @@
 class Chicken extends MovableObject{
+    
 
     IMAGES_WALKING = [
         "assets/img/3_enemies_chicken/chicken_normal/1_walk/w1_w.png",
@@ -6,7 +7,6 @@ class Chicken extends MovableObject{
         "assets/img/3_enemies_chicken/chicken_normal/1_walk/w3_w.png",
     ];
     
-
     constructor(){
         super();
         this.loadImage('assets/img/3_enemies_chicken/chicken_normal/1_walk/w1_w.png'); //super übergeordnete FUnkiton -> MovalbeObject
@@ -19,6 +19,7 @@ class Chicken extends MovableObject{
         this.speed = 0.35 + Math.random() * 0.25;
         
         this.animate(this.speed);
+        this.offset = { top: 4, bottom: 4, left: 4, right: 4};
 
     }
 
@@ -26,7 +27,7 @@ class Chicken extends MovableObject{
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING)
         }, 80);
-        this.moveLeft();
+        //this.moveLeft();
     }
 
 
