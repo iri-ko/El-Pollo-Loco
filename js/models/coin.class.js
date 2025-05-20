@@ -7,6 +7,7 @@ class Coin extends MovableObject {
         this.y = 150 + Math.random() * 160; // Keeps them between 200 and 360
         this.height = 100;
         this.width = 100;
+        this.offset = { top: 35, bottom: 35, left: 35, right: 35};
     }
 
 }

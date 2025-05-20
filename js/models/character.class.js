@@ -1,8 +1,3 @@
-/**
- * Create a new Character
- * @class
- */
-
 class Character extends MovableObject {
     IMAGES_WALKING = [
         "assets/img/2_character_pepe/2_walk/W-21.png",
@@ -72,6 +67,7 @@ class Character extends MovableObject {
     y = 200;
     acceleration = 2;
     energy = 100;
+    coinCounter = 0;
 
     constructor() {
         super();
