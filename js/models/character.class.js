@@ -138,7 +138,7 @@ class Character extends MovableObject {
 
         let lastActivityTime = Date.now(); // Store last key press time
 
-       setInterval(() => {
+    setInterval(() => {
     if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMPING);
     }

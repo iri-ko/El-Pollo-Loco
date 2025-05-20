@@ -1,11 +1,5 @@
-class MovableObject {
-    x = 100; //PLatzierung von CHarakter und Enemies
-    y = 200;
-    height = 250;
-    width = 150;
-    img;
-    imageCache = {}; //für animations
-    currentImage = 0;
+class MovableObject extends DrawableObject {
+    
     speed = 0.15;
     otherDirection = false; //für Spiegeln beim links/rechts laufen
     speedY = 0;
@@ -14,6 +8,7 @@ class MovableObject {
     lastHit = 0;
 
     constructor() {
+        super();
         this.x = 100;
         this.y = 200;
         this.width = 150;
@@ -24,22 +19,8 @@ class MovableObject {
         this.offset = { top: 0, bottom: 0, left: 0, right: 0 };
     }
 
-    loadImage(path) {
-        this.img = new Image(); //vorgefertigt
-        this.img.src = path;
-    }
 
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image(); // kreiert neues Bild
-            img.src = path; //Abfrage nach URL
-            this.imageCache[path] = img; //Zugriff auf imageCache JSON
-        });
-    }
 
-    drawObject(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
 
     drawFrame(ctx) {
         if (this instanceof Character || this instanceof Chicken) {
