@@ -51,10 +51,27 @@ class Character extends MovableObject {
         "assets/img/2_character_pepe/3_jump/J-39.png",
     ];
 
+    IMAGES_DEAD = [
+        "assets/img/2_character_pepe/5_dead/D-51.png",
+        "assets/img/2_character_pepe/5_dead/D-52.png",
+        "assets/img/2_character_pepe/5_dead/D-53.png",
+        "assets/img/2_character_pepe/5_dead/D-54.png",
+        "assets/img/2_character_pepe/5_dead/D-55.png",
+        "assets/img/2_character_pepe/5_dead/D-56.png",
+        "assets/img/2_character_pepe/5_dead/D-57.png",
+    ];
+
+    IMAGES_HURT = [
+        "assets/img/2_character_pepe/4_hurt/H-41.png",
+        "assets/img/2_character_pepe/4_hurt/H-42.png",
+        "assets/img/2_character_pepe/4_hurt/H-43.png",
+    ];
+
     world;
     currentImage = 0;
     y = 200;
     acceleration = 2;
+    energy = 100;
 
     constructor() {
         super();
@@ -63,10 +80,14 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_IDLE_LONG);
         this.loadImages(this.IMAGES_JUMPING);
+        this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_HURT);
 
         this.animate();
         this.applyGravity();
         this.offset = { top: 130, bottom: 30, left: 50, right: 50 };
+
+        this.lastActivityTime = Date.now();
     }
 
     applyGravity() {
@@ -111,74 +132,54 @@ class Character extends MovableObject {
 
         //#endregion
 
-        //#region jump animations
-        setInterval(() => {
-            if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else {
-                if (
-                    !this.world.keyboard.RIGHT &&
-                    !this.world.keyboard.LEFT &&
-                    !this.world.keyboard.UP &&
-                    !this.world.keyboard.DOWN &&
-                    !this.world.keyboard.SPACE
-                    //checks if no key was pressed
-                ) {
-                    let currentTime = Date.now(); //now checks current time
-                    let timeElapsed = currentTime - lastActivityTime; //checks how much time since any activity was detected)
 
-                    if (timeElapsed >= 7000) {
-                        //if 7 seconds have passed, play long idle animation
-                        this.playAnimation(this.IMAGES_IDLE_LONG);
-                    } else {
-                        // Otherwise, play normal idle animation
-                        this.playAnimation(this.IMAGES_IDLE);
-                    }
-
-                    this.currentImage++;
-                } else {
-                    lastActivityTime = Date.now(); // Reset timer when key is pressed
-                }
-            }
-
-            //Jump only when pressed up and Pepe is on the ground (or not above the ground)
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-            }
-        }, 100);
-        //#endregion
 
         //#region Idle animations
 
         let lastActivityTime = Date.now(); // Store last key press time
 
-        setInterval(() => {
-            if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
+       setInterval(() => {
+    if (this.isAboveGround()) {
+        this.playAnimation(this.IMAGES_JUMPING);
+    }
+    else if (this.isDead()) {
+        this.playAnimation(this.IMAGES_DEAD);
+    }
+    else if (this.isHurt()) {
+        this.playAnimation(this.IMAGES_HURT);
+    }
+    else {
+        if (
+            !this.world.keyboard.RIGHT &&
+            !this.world.keyboard.LEFT &&
+            !this.world.keyboard.UP &&
+            !this.world.keyboard.DOWN &&
+            !this.world.keyboard.SPACE
+        ) {
+            let currentTime = Date.now();
+            let timeElapsed = currentTime - lastActivityTime;
+
+            if (timeElapsed >= 7000) {
+                this.playAnimation(this.IMAGES_IDLE_LONG);
             } else {
-                if (
-                    !this.world.keyboard.RIGHT &&
-                    !this.world.keyboard.LEFT &&
-                    !this.world.keyboard.UP &&
-                    !this.world.keyboard.DOWN &&
-                    !this.world.keyboard.SPACE
-                ) {
-                    let currentTime = Date.now();
-                    let timeElapsed = currentTime - lastActivityTime;
-
-                    if (timeElapsed >= 7000) {
-                        this.playAnimation(this.IMAGES_IDLE_LONG);
-                    } else {
-                        this.playAnimation(this.IMAGES_IDLE);
-                    }
-                }
-                this.currentImage++;
+                this.playAnimation(this.IMAGES_IDLE);
             }
+        } else {
+            lastActivityTime = Date.now(); // **Reset inactivity timer whenever movement occurs**
+        }
 
-            if (this.world.keyboard.UP && !this.isAboveGround()) {
-                this.speedY = 20;
-            }
-        }, 200);
+        this.currentImage++;
+    }
+
+    if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+        this.speedY = 20;
+    }
+
+    if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+        this.jump();
+    }
+}, 200);
+
 
         //#endregion
     }

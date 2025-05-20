@@ -11,6 +11,7 @@ class MovableObject {
     speedY = 0;
 
     offeset;
+    lastHit = 0;
 
     constructor() {
         this.x = 100;
@@ -66,14 +67,35 @@ class MovableObject {
     }
 
     isColling(mo) {
-    return (
-        this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
-        this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-        this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
-        this.y + this.height - this.offset.bottom > mo.y + mo.offset.top
-    );
+        return (
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top
+        );
+    }
+
+   hit() {
+    this.energy -= 5;
+    if (this.energy <= 0) {
+        this.energy = 0;
+    } else {
+        this.lastHit = Date.now(); // Ensures fresh timestamp
+        this.currentImage = 0; // **Reset animation frame to start the hurt animation**
+    }
 }
 
+
+    isHurt() {
+        let timePassed = new Date().getTime() - this.lastHit;
+        return timePassed < 1000;
+        //animation plays for 1 second after hit
+    }
+
+    isDead() {
+        let timePassed = new Date().getTime() - this.lastHit;
+        return this.energy == 0 && timePassed < 1000;
+    }
 
     walkRight() {
         this.x += 10;

@@ -47,18 +47,22 @@ class World {
         this.checkCollisions();
     }
 
+
+    //use for Collions
     checkCollisions(){
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                
-                if(this.character.isColling(enemy)){
-                    console.log('Collision!');
-                    
-                };
-                
-                
-            });
-        }, 200);
+    this.level.enemies.forEach((enemy) => {
+        if (this.character.isColling(enemy)) {
+            let timeSinceLastHit = Date.now() - this.character.lastHit;
+            
+            if (timeSinceLastHit > 1000) { // **Only register hits every 1 second**
+                console.log("Collision detected! Character takes damage.");
+                this.character.hit();
+            }
+        }
+    });
+}, 200); // **Still checks often, but damage only happens once per second**
+
     }
 
     addObjectsToMap(objects) {
