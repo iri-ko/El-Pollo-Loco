@@ -11,6 +11,8 @@ class World {
     healthBar = new HealthBar();
     bottleBar = new BottleBar();
 
+    coinHit = false;
+
     //#endregion
 
     constructor(canvas, keyboard) {
@@ -30,10 +32,10 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
 
+        this.addObjectsToMap(this.level.backgroundObjects);
+
         this.addObjectsToMap(this.level.salsaBottles);
         this.addObjectsToMap(this.level.coins);
-
-        this.addObjectsToMap(this.level.backgroundObjects);
 
         //zugriff auf Bild und Koordinaten vom Charakter)
 
@@ -58,8 +60,9 @@ class World {
     //use for Collions
     checkCollisions() {
         setInterval(() => {
+            //check enemy
             this.level.enemies.forEach((enemy) => {
-                if (this.character.isColling(enemy)) {
+                if (this.character.isColliding(enemy)) {
                     let timeSinceLastHit = Date.now() - this.character.lastHit;
 
                     if (timeSinceLastHit > 1000) {
@@ -70,6 +73,15 @@ class World {
                         this.character.hit();
                         this.healthBar.setPercentage(this.character.energy);
                     }
+                }
+            });
+
+            this.level.coins.forEach((coin, index) => {
+                if (this.character.isColliding(coin)) {
+                    this.character.coinCounter++;
+                    this.level.coins.splice(index, 1); //removes coin
+                    console.log(this.character.coinCounter);
+
                 }
             });
         }, 200); // **Still checks often, but damage only happens once per second**
