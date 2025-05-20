@@ -81,26 +81,21 @@ class World {
                 if (this.character.isColliding(coin)) {
                     this.character.coinCounter++;
                     this.level.coins.splice(index, 1); //removes coin
-                    console.log('coins:' + this.character.coinCounter);
-
+                    console.log("coins:" + this.character.coinCounter);
                 }
             });
-            
 
             this.level.salsaBottles.forEach((bottle, index) => {
                 if (this.character.isColliding(bottle)) {
                     this.character.bottleCounter++;
                     this.level.salsaBottles.splice(index, 1); //removes coin
-                    console.log('bottles:' +this.character.bottleCounter);
                     let newPercentage = Math.min(
-                    (this.character.bottleCounter / 5) * 100, // Adjust scaling as needed
+                        (this.character.bottleCounter / 5) * 100 // Adjust scaling as needed
+                    );
+
+                    this.bottleBar.setPercentage(newPercentage);
+
                     
-
-                );
-
-                
-                
-                this.bottleBar.setPercentage(newPercentage);
                 }
             });
         }, 200); // **Still checks often, but damage only happens once per second**
