@@ -68,6 +68,7 @@ class Character extends MovableObject {
     acceleration = 2;
     energy = 100;
     coinCounter = 0;
+    bottleCounter = 0;
 
     constructor() {
         super();
