@@ -8,7 +8,7 @@ class World {
     keyboard;
     camera_x = 0;
 
-    statusBar = new StatusBar();
+    healthBar = new HealthBar();
 
     //#endregion
 
@@ -43,7 +43,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
 
         //space for fixed elements
-        this.addToMap(this.statusBar);
+        this.addToMap(this.healthBar);
 
         let self = this;
         //draw() wird immer wieder ausgeführt
@@ -66,7 +66,7 @@ class World {
                             "Collision detected! Character takes damage."
                         );
                         this.character.hit();
-                        this.statusBar.setPercentage(this.character.energy)
+                        this.healthBar.setPercentage(this.character.energy);
                     }
                 }
             });
