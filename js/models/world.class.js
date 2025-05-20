@@ -1,4 +1,5 @@
 class World {
+    //#region attributes
     character = new Character();
     level = level1;
 
@@ -6,6 +7,10 @@ class World {
     canvas;
     keyboard;
     camera_x = 0;
+
+    statusBar = new StatusBar();
+
+    //#endregion
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -34,10 +39,11 @@ class World {
         this.addObjectsToMap(this.level.clouds); //kreiert Wolken
 
         this.addObjectsToMap(this.level.enemies); //kreiert Gegner
-
         this.addToMap(this.character);
-
         this.ctx.translate(-this.camera_x, 0);
+
+        //space for fixed elements
+        this.addToMap(this.statusBar);
 
         let self = this;
         //draw() wird immer wieder ausgeführt
@@ -47,22 +53,24 @@ class World {
         this.checkCollisions();
     }
 
-
     //use for Collions
-    checkCollisions(){
+    checkCollisions() {
         setInterval(() => {
-    this.level.enemies.forEach((enemy) => {
-        if (this.character.isColling(enemy)) {
-            let timeSinceLastHit = Date.now() - this.character.lastHit;
-            
-            if (timeSinceLastHit > 1000) { // **Only register hits every 1 second**
-                console.log("Collision detected! Character takes damage.");
-                this.character.hit();
-            }
-        }
-    });
-}, 200); // **Still checks often, but damage only happens once per second**
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColling(enemy)) {
+                    let timeSinceLastHit = Date.now() - this.character.lastHit;
 
+                    if (timeSinceLastHit > 1000) {
+                        // **Only register hits every 1 second**
+                        console.log(
+                            "Collision detected! Character takes damage."
+                        );
+                        this.character.hit();
+                        this.statusBar.setPercentage(this.character.energy)
+                    }
+                }
+            });
+        }, 200); // **Still checks often, but damage only happens once per second**
     }
 
     addObjectsToMap(objects) {
@@ -78,7 +86,7 @@ class World {
 
         mo.drawObject(this.ctx);
         mo.drawFrame(this.ctx);
-        mo.drawHitbox(this.ctx)
+        mo.drawHitbox(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
