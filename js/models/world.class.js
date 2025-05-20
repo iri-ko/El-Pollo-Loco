@@ -9,6 +9,7 @@ class World {
     camera_x = 0;
 
     healthBar = new HealthBar();
+    bottleBar = new BottleBar();
 
     //#endregion
 
@@ -44,6 +45,7 @@ class World {
 
         //space for fixed elements
         this.addToMap(this.healthBar);
+        this.addToMap(this.bottleBar);
 
         let self = this;
         //draw() wird immer wieder ausgeführt
