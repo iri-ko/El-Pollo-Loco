@@ -10,6 +10,7 @@ class World {
 
     healthBar = new HealthBar();
     bottleBar = new BottleBar();
+    throwableObjects = [new ThrowableObject()]; 
 
     coinHit = false;
 
@@ -40,8 +41,11 @@ class World {
         //zugriff auf Bild und Koordinaten vom Charakter)
 
         this.addObjectsToMap(this.level.clouds); //kreiert Wolken
-
+        
         this.addObjectsToMap(this.level.enemies); //kreiert Gegner
+        
+        this.addObjectsToMap(this.throwableObjects); // not showing
+
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
 
@@ -55,6 +59,7 @@ class World {
             self.draw(); //this geht hier nicht mehr -> deswegen oben self als this definiert und hier unten statt this verwendet
         });
         this.checkCollisions();
+        
     }
 
     //use for Collions

@@ -87,15 +87,7 @@ class Character extends MovableObject {
         this.lastActivityTime = Date.now();
     }
 
-    applyGravity() {
-        //damit Pepe runterfällt
-        setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {
-                this.y -= this.speedY;
-                this.speedY -= this.acceleration;
-            }
-        }, 1000 / 25);
-    }
+    
 
     isAboveGround() {
         return this.y < 190;

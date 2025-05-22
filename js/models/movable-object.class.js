@@ -1,5 +1,4 @@
 class MovableObject extends DrawableObject {
-    
     speed = 0.15;
     otherDirection = false; //für Spiegeln beim links/rechts laufen
     speedY = 0;
@@ -19,10 +18,15 @@ class MovableObject extends DrawableObject {
         this.offset = { top: 0, bottom: 0, left: 0, right: 0 };
     }
 
-
-
-
-    
+    applyGravity() {
+        //damit Pepe runterfällt
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+        }, 1000 / 25);
+    }
 
     isColliding(mo) {
         return (
@@ -33,16 +37,15 @@ class MovableObject extends DrawableObject {
         );
     }
 
-   hit() {
-    this.energy -= 20;
-    if (this.energy <= 0) {
-        this.energy = 0;
-    } else {
-        this.lastHit = Date.now(); // Ensures fresh timestamp
-        this.currentImage = 0; // **Reset animation frame to start the hurt animation**
+    hit() {
+        this.energy -= 20;
+        if (this.energy <= 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = Date.now(); // Ensures fresh timestamp
+            this.currentImage = 0; // **Reset animation frame to start the hurt animation**
+        }
     }
-}
-
 
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit;
@@ -68,6 +71,13 @@ class MovableObject extends DrawableObject {
     moveLeft() {
         setInterval(() => {
             this.x -= this.speed; // X gets reduced by 5 according to set time
+        }, 1000 / 60); //set time
+    }
+
+    moveRight() {
+        setInterval(() => {
+            this.speed = 5
+            this.x += this.speed; // X gets reduced by 5 according to set time
         }, 1000 / 60); //set time
     }
 
