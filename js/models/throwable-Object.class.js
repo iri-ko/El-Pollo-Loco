@@ -20,7 +20,7 @@ class ThrowableObject extends MovableObject {
         //this.height = 50;
         //this.width = 50;
         this.loadImages(this.IMAGES_SPINNING);
-        this.animate();
+        //this.animate();
         //
         this.throw(100, 150);
     }
@@ -30,7 +30,11 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.speedY = 5;
         
-        this.applyGravity();;
+        this.applyGravity();
+
+        setInterval(() => {
+        this.x += 10;
+    }, 25);
     }
 
     animate() {

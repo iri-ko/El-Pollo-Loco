@@ -12,7 +12,9 @@ class World {
     bottleBar = new BottleBar();
     throwableObjects = [new ThrowableObject()];
 
-    coinHit = false;
+
+    throwFlag = false;
+    
 
     //#endregion
 
@@ -59,6 +61,7 @@ class World {
             self.draw(); //this geht hier nicht mehr -> deswegen oben self als this definiert und hier unten statt this verwendet
         });
         this.checkCollisions();
+        this.checkThrowObjects();
     }
 
     //use for Collions
@@ -110,7 +113,7 @@ class World {
                 ) {
                     console.log("Jump kill successful! Removing chicken...");
                     enemy.die(); // Trigger death animation
-                    this.character.speedY = 10; // Bounce effect after jumping on the chicken
+                    this.character.speedY = 10; // makes jump bouncy :D
                     this.level.enemies.splice(index, 1); // Remove chicken from the game
                 } else if (this.character.isColliding(enemy)) {
                     let timeSinceLastHit = Date.now() - this.character.lastHit;
@@ -122,6 +125,27 @@ class World {
             });
         }, 200); // **Still checks often, but damage only happens once per second**
     }
+
+    checkThrowObjects() {
+    if (this.keyboard.DOWN && !this.throwFlag && this.character.bottleCounter >=1) {
+        console.log("Bottle go! 🏹");
+
+        let bottle = new ThrowableObject();
+        bottle.x = this.character.x + this.character.width / 2; // Center it at character's X
+        bottle.y = this.character.y + this.character.height / 2; // Position it at character's Y
+
+        this.throwableObjects.push(bottle);
+        this.throwFlag = true;
+        this.character.bottleCounter -=1;
+        
+        
+
+        setTimeout(() => {
+            this.throwFlag = false;
+        }, 500); 
+    }
+}
+
 
     addObjectsToMap(objects) {
         objects.forEach((o) => {

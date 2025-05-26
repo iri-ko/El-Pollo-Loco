@@ -34,7 +34,12 @@ class MovableObject extends DrawableObject {
 
     //#region conditions
     isAboveGround() {
-        return this.y < 190;
+        if (this instanceof ThrowableObject) {
+            return true;
+            //bottle goes through ground when thrown
+        } else {
+            return this.y < 190;
+        }
     }
 
     isColliding(mo) {
