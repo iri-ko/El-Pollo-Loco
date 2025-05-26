@@ -89,9 +89,6 @@ class Character extends MovableObject {
 
     
 
-    isAboveGround() {
-        return this.y < 190;
-    }
 
     animate() {
         // #region walking animation
@@ -118,12 +115,7 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 50);
-
         //#endregion
-
-
-
-        //#region Idle animations
 
         let lastActivityTime = Date.now(); // Store last key press time
 
@@ -170,6 +162,5 @@ class Character extends MovableObject {
 }, 200);
 
 
-        //#endregion
     }
 }

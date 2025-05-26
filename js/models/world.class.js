@@ -44,9 +44,11 @@ class World {
         
         this.addObjectsToMap(this.level.enemies); //kreiert Gegner
         
-        this.addObjectsToMap(this.throwableObjects); // not showing
+        
 
         this.addToMap(this.character);
+        this.addObjectsToMap(this.throwableObjects);
+
         this.ctx.translate(-this.camera_x, 0);
 
         //space for fixed elements

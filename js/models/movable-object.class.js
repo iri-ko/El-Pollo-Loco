@@ -1,10 +1,13 @@
 class MovableObject extends DrawableObject {
+    //#region attributes
     speed = 0.15;
     otherDirection = false; //für Spiegeln beim links/rechts laufen
     speedY = 0;
 
     offeset;
     lastHit = 0;
+
+    //#endregion
 
     constructor() {
         super();
@@ -19,13 +22,19 @@ class MovableObject extends DrawableObject {
     }
 
     applyGravity() {
-        //damit Pepe runterfällt
+        //damit Pepe und Bottle runterfällt
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
         }, 1000 / 25);
+    }
+
+
+    //#region conditions
+    isAboveGround() {
+        return this.y < 190;
     }
 
     isColliding(mo) {
@@ -46,7 +55,9 @@ class MovableObject extends DrawableObject {
             this.currentImage = 0; // **Reset animation frame to start the hurt animation**
         }
     }
+    //#endregion
 
+    //#region hurt/dead
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit;
         return timePassed < 1000;
@@ -57,7 +68,9 @@ class MovableObject extends DrawableObject {
         let timePassed = new Date().getTime() - this.lastHit;
         return this.energy == 0 && timePassed < 1000;
     }
+    //#endregion
 
+    //#region move/walk directions
     walkRight() {
         this.x += 10;
         this.otherDirection = false;
@@ -80,6 +93,11 @@ class MovableObject extends DrawableObject {
             this.x += this.speed; // X gets reduced by 5 according to set time
         }, 1000 / 60); //set time
     }
+    //#endregion
+
+    jump() {
+        this.speedY = 30; //determines how high Pepe jumps
+    }
 
     playAnimation(images) {
         let i = this.currentImage % images.length; // Ensure looping through the array
@@ -88,7 +106,5 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
-    jump() {
-        this.speedY = 30; //determines how high Pepe jumps
-    }
+    
 }
