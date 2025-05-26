@@ -8,7 +8,6 @@ class Chicken extends MovableObject {
     constructor() {
         super();
         this.loadImages(this.IMAGES_WALKING);
-
         this.x = 250 + Math.random() * 300;
         this.y = 360;
         this.height = 80;

@@ -69,6 +69,7 @@ class Character extends MovableObject {
     energy = 100;
     coinCounter = 0;
     bottleCounter = 0;
+    isFacingRight = true;
 
     constructor() {
         super();
@@ -88,7 +89,7 @@ class Character extends MovableObject {
     }
 
     
-
+    
 
     animate() {
         // #region walking animation
@@ -98,10 +99,14 @@ class Character extends MovableObject {
                 this.x < this.world.level.level_end_x
             ) {
                 this.walkRight();
+                this.isFacingRight = true;
+                console.log(this.isFacingRight);
             }
 
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.walkLeft();
+                this.isFacingRight = false;
+                console.log(this.isFacingRight);
             }
 
             this.world.camera_x = -this.x + 100;

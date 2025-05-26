@@ -7,7 +7,6 @@ class MovableObject extends DrawableObject {
     offeset;
     lastHit = 0;
     acceleration = 2;
-
     //#endregion
 
     constructor() {
@@ -18,7 +17,6 @@ class MovableObject extends DrawableObject {
         this.height = 250;
         this.img;
         this.speed = 0.15;
-
         this.offset = { top: 0, bottom: 0, left: 0, right: 0 };
     }
 
@@ -53,15 +51,15 @@ class MovableObject extends DrawableObject {
 
     jumpKill(chicken) {
         return (
-            this.speedY < 0 && // Ensure the player was falling!
+            this.speedY < 0 && //character falling
             this.y + this.height - this.offset.bottom >=
-                chicken.y + chicken.offset.top && // Feet land on top
+                chicken.y + chicken.offset.top && // feet land on top
             this.y + this.height - this.offset.bottom <
-                chicken.y + chicken.height && // Prevent false triggers
+                chicken.y + chicken.height && // prevent false triggers
             this.x + this.offset.left <
-                chicken.x + chicken.width - chicken.offset.right && // Horizontal alignment
+                chicken.x + chicken.width - chicken.offset.right && // hrizontal alignment
             this.x + this.width - this.offset.right >
-                chicken.x + chicken.offset.left // Horizontal alignment
+                chicken.x + chicken.offset.left // horizontal alignment
         );
     }
 

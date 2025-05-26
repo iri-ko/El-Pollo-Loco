@@ -10,11 +10,9 @@ class World {
 
     healthBar = new HealthBar();
     bottleBar = new BottleBar();
-    throwableObjects = [new ThrowableObject()];
-
+    throwableObjects = [];
 
     throwFlag = false;
-    
 
     //#endregion
 
@@ -64,7 +62,7 @@ class World {
         this.checkThrowObjects();
     }
 
-    //use for Collions
+    //use for Collisions
     checkCollisions() {
         setInterval(() => {
             //check enemy
@@ -76,9 +74,6 @@ class World {
                     let timeSinceLastHit = Date.now() - this.character.lastHit;
 
                     if (timeSinceLastHit > 1000) {
-                        console.log(
-                            "Collision detected! Character takes damage."
-                        );
                         this.character.hit();
                         this.healthBar.setPercentage(this.character.energy);
                     }
@@ -90,7 +85,6 @@ class World {
                 if (this.character.isColliding(coin)) {
                     this.character.coinCounter++;
                     this.level.coins.splice(index, 1); //removes coin
-                    console.log("coins:" + this.character.coinCounter);
                 }
             });
 
@@ -111,7 +105,6 @@ class World {
                     enemy instanceof Chicken &&
                     this.character.jumpKill(enemy)
                 ) {
-                    console.log("Jump kill successful! Removing chicken...");
                     enemy.die(); // Trigger death animation
                     this.character.speedY = 10; // makes jump bouncy :D
                     this.level.enemies.splice(index, 1); // Remove chicken from the game
@@ -123,29 +116,39 @@ class World {
                     }
                 }
             });
+
+            this.throwableObjects.forEach((bottle) => {
+                this.level.enemies.forEach((enemy) => {
+                    if (enemy instanceof Chicken && bottle.isColliding(enemy)) {
+                        enemy.die();
+                    }
+                });
+            });
         }, 200); // **Still checks often, but damage only happens once per second**
     }
 
     checkThrowObjects() {
-    if (this.keyboard.DOWN && !this.throwFlag && this.character.bottleCounter >=1) {
-        console.log("Bottle go! 🏹");
+        if (
+            this.keyboard.DOWN &&
+            !this.throwFlag &&
+            this.character.bottleCounter >= 1
+        ) {
+            console.log("Character Facing Right:", this.character.isFacingRight);
+            let bottle = new ThrowableObject(
+                this.character.x + this.character.width / 2,
+                this.character.y + this.character.height / 2,
+                this.character // ✅ Pass character reference
+            );
 
-        let bottle = new ThrowableObject();
-        bottle.x = this.character.x + this.character.width / 2; // Center it at character's X
-        bottle.y = this.character.y + this.character.height / 2; // Position it at character's Y
+            this.throwableObjects.push(bottle);
+            this.throwFlag = true;
+            this.character.bottleCounter -= 1;
 
-        this.throwableObjects.push(bottle);
-        this.throwFlag = true;
-        this.character.bottleCounter -=1;
-        
-        
-
-        setTimeout(() => {
-            this.throwFlag = false;
-        }, 500); 
+            setTimeout(() => {
+                this.throwFlag = false;
+            }, 500);
+        }
     }
-}
-
 
     addObjectsToMap(objects) {
         objects.forEach((o) => {
