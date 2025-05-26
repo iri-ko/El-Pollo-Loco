@@ -10,7 +10,7 @@ class World {
 
     healthBar = new HealthBar();
     bottleBar = new BottleBar();
-    throwableObjects = [new ThrowableObject()]; 
+    throwableObjects = [new ThrowableObject()];
 
     coinHit = false;
 
@@ -41,10 +41,8 @@ class World {
         //zugriff auf Bild und Koordinaten vom Charakter)
 
         this.addObjectsToMap(this.level.clouds); //kreiert Wolken
-        
+
         this.addObjectsToMap(this.level.enemies); //kreiert Gegner
-        
-        
 
         this.addToMap(this.character);
         this.addObjectsToMap(this.throwableObjects);
@@ -61,7 +59,6 @@ class World {
             self.draw(); //this geht hier nicht mehr -> deswegen oben self als this definiert und hier unten statt this verwendet
         });
         this.checkCollisions();
-        
     }
 
     //use for Collions
@@ -69,11 +66,13 @@ class World {
         setInterval(() => {
             //check enemy
             this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
+                if (
+                    this.character.isColliding(enemy) &&
+                    !this.character.jumpKill(enemy)
+                ) {
                     let timeSinceLastHit = Date.now() - this.character.lastHit;
 
                     if (timeSinceLastHit > 1000) {
-                        // **Only register hits every 1 second**
                         console.log(
                             "Collision detected! Character takes damage."
                         );
@@ -101,8 +100,24 @@ class World {
                     );
 
                     this.bottleBar.setPercentage(newPercentage);
+                }
+            });
 
-                    
+            this.level.enemies.forEach((enemy, index) => {
+                if (
+                    enemy instanceof Chicken &&
+                    this.character.jumpKill(enemy)
+                ) {
+                    console.log("Jump kill successful! Removing chicken...");
+                    enemy.die(); // Trigger death animation
+                    this.character.speedY = 10; // Bounce effect after jumping on the chicken
+                    this.level.enemies.splice(index, 1); // Remove chicken from the game
+                } else if (this.character.isColliding(enemy)) {
+                    let timeSinceLastHit = Date.now() - this.character.lastHit;
+                    if (timeSinceLastHit > 1000) {
+                        this.character.hit();
+                        this.healthBar.setPercentage(this.character.energy);
+                    }
                 }
             });
         }, 200); // **Still checks often, but damage only happens once per second**

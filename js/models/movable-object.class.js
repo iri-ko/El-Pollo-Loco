@@ -31,7 +31,6 @@ class MovableObject extends DrawableObject {
         }, 1000 / 25);
     }
 
-
     //#region conditions
     isAboveGround() {
         return this.y < 190;
@@ -43,6 +42,20 @@ class MovableObject extends DrawableObject {
             this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top
+        );
+    }
+
+    jumpKill(chicken) {
+        return (
+            this.speedY < 0 && // Ensure the player was falling!
+            this.y + this.height - this.offset.bottom >=
+                chicken.y + chicken.offset.top && // Feet land on top
+            this.y + this.height - this.offset.bottom <
+                chicken.y + chicken.height && // Prevent false triggers
+            this.x + this.offset.left <
+                chicken.x + chicken.width - chicken.offset.right && // Horizontal alignment
+            this.x + this.width - this.offset.right >
+                chicken.x + chicken.offset.left // Horizontal alignment
         );
     }
 
@@ -89,7 +102,7 @@ class MovableObject extends DrawableObject {
 
     moveRight() {
         setInterval(() => {
-            this.speed = 5
+            this.speed = 5;
             this.x += this.speed; // X gets reduced by 5 according to set time
         }, 1000 / 60); //set time
     }
@@ -105,6 +118,4 @@ class MovableObject extends DrawableObject {
         this.img = this.imageCache[path]; // Retrieve cached image
         this.currentImage++;
     }
-
-    
 }
