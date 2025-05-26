@@ -1,5 +1,4 @@
 class DrawableObject {
-
     //#region attributes
     x = 100; //PLatzierung von CHarakter und Enemies
     y = 200;
@@ -9,7 +8,6 @@ class DrawableObject {
     imageCache = {}; //für animations
     currentImage = 0;
     //endregion
-
 
     //#region general rendering
     loadImage(path) {
@@ -30,14 +28,14 @@ class DrawableObject {
     }
     //#endregion
 
-
     //#region frames
     drawFrame(ctx) {
         if (
             this instanceof Character ||
             this instanceof Chicken ||
             this instanceof SalsaBottle ||
-            this instanceof Coin
+            this instanceof Coin ||
+            this instanceof ThrowableObject
         ) {
             ctx.beginPath();
             ctx.lineWidth = "2";
@@ -52,7 +50,8 @@ class DrawableObject {
             this instanceof Character ||
             this instanceof Chicken ||
             this instanceof SalsaBottle ||
-            this instanceof Coin
+            this instanceof Coin ||
+            this instanceof ThrowableObject
         ) {
             ctx.beginPath();
             ctx.lineWidth = "2";

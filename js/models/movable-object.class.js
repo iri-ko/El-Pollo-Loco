@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
 
     offeset;
     lastHit = 0;
+    acceleration = 2;
 
     //#endregion
 
