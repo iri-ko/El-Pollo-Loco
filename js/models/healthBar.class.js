@@ -9,6 +9,6 @@ class HealthBar extends StatusBar {
             "assets/img/7_statusbars/1_statusbar/2_statusbar_health/orange/0.png",
         ]); 
 
-        this.setPercentage(100); // ✅ Now works because IMAGES is set at construction
+        this.setPercentage(100); 
     }
 }

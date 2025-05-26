@@ -14,14 +14,14 @@ class Endboss extends MovableObject {
 
     constructor(){
         super();
-        this.loadImage('assets/img/4_enemie_boss_chicken/1_walk/G1.png'); //super übergeordnete FUnkiton -> MovalbeObject
         this.loadImages(this.IMAGES_ALERT);
 
-        this.x = 1500 + Math.random() * 300;
-        this.y = 100;
+        this.x = 2100; 
+        this.y = 60;
         this.height = 400;
         this.width = 500;
         this.speed = 1 + Math.random() * 0.25;
+        this.offset = { top: 80, bottom: 30, left: 50, right: 50 };
         
         this.animate(this.speed);
 

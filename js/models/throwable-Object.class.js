@@ -6,48 +6,78 @@ class ThrowableObject extends MovableObject {
         "assets/img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png",
     ];
 
-    constructor(x, y, character) {
+    IMAGES_SPLASHING = [
+        "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png",
+        "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png",
+        "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png",
+        "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png",
+        "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png",
+        "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
+    ];
+
+    constructor(x, y, character, world) {
         super();
         this.loadImage(
             "assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png"
         );
-        this.character = character; 
+        this.character = character;
+         this.world = world;
         this.x = x;
         this.y = y;
         this.height = 60;
         this.width = 60;
         this.offset = { top: 8, bottom: 8, left: 8, right: 8 };
-        //this.height = 50;
-        //this.width = 50;
         this.loadImages(this.IMAGES_SPINNING);
-        //this.animate();
+        this.loadImages(this.IMAGES_SPLASHING);
+        //
+        this.animate();
         //
         this.throw(100, 150);
     }
 
-throw() {
-    this.speedY = 35;
-    this.applyGravity();
+    throw() {
+        this.speedY = 25;
+        this.applyGravity();
 
-    let movementDirection;
+        let movementDirection;
 
-    if (this.character.isFacingRight === true) {
-        movementDirection = 5; // Move right
-    } else {
-        movementDirection = -5; // Move left
+        if (this.character.isFacingRight === true) {
+            movementDirection = 5; // Move right
+        } else {
+            movementDirection = -5; // Move left
+        }
+
+        setInterval(() => {
+            this.x += movementDirection; // ✅ Now using movementDirection correctly!
+        }, 25);
     }
 
-    setInterval(() => {
-        this.x += movementDirection; // ✅ Now using movementDirection correctly!
-    }, 25);
+splash() {
+    this.isSplashing = true; // ✅ Ensures splash animation starts
+    this.playAnimation(this.IMAGES_SPLASHING); 
+    this.speedY = 0; // ✅ Stop movement
+    this.x += 0; // ✅ Prevent further movement
+
+    // ✅ Remove bottle after the splash animation completes
+    setTimeout(() => {
+        let index = this.world.throwableObjects.indexOf(this);
+        if (index > -1) {
+            this.world.throwableObjects.splice(index, 1); // ✅ Bottle disappears after splash
+        }
+    }, this.IMAGES_SPLASHING.length * 100); // Adjust timing to fit animation length
 }
 
 
 
 
-    animate() {
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_SPINNING);
-        }, 60);
-    }
+   animate() {
+    setInterval(() => {
+        if (this.isSplashing) {
+            this.playAnimation(this.IMAGES_SPLASHING); // ✅ Correct animation trigger
+        } else {
+            this.playAnimation(this.IMAGES_SPINNING); // ✅ Keep spinning until splash
+        }
+    }, 60);
+}
+
 }

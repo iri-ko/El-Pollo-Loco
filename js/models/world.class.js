@@ -10,9 +10,11 @@ class World {
 
     healthBar = new HealthBar();
     bottleBar = new BottleBar();
+    bossBar = new BossBar();
     throwableObjects = [];
 
     throwFlag = false;
+    bottleFlag = false;
 
     //#endregion
 
@@ -52,6 +54,7 @@ class World {
         //space for fixed elements
         this.addToMap(this.healthBar);
         this.addToMap(this.bottleBar);
+        this.addToMap(this.bossBar);
 
         let self = this;
         //draw() wird immer wieder ausgeführt
@@ -102,8 +105,7 @@ class World {
 
             this.level.enemies.forEach((enemy, index) => {
                 if (
-                    (enemy instanceof Chicken ||
-                    enemy instanceof BabyChick) &&
+                    (enemy instanceof Chicken || enemy instanceof BabyChick) &&
                     this.character.jumpKill(enemy)
                 ) {
                     enemy.die(); // Trigger death animation
@@ -120,11 +122,19 @@ class World {
 
             this.throwableObjects.forEach((bottle) => {
                 this.level.enemies.forEach((enemy) => {
-                    if ((enemy instanceof Chicken 
-                        || enemy instanceof BabyChick
-                    ) &&
-                        bottle.isColliding(enemy)) {
+                    if (
+                        (enemy instanceof Chicken ||
+                            enemy instanceof BabyChick) &&
+                        bottle.isColliding(enemy) &&
+                        !this.bottleFlag
+                    ) {
                         enemy.die();
+                        bottle.splash();
+                        this.bottleFlag = true; // prevents multibale collisions
+
+                        setTimeout(() => {
+                            this.bottleFlag = false; 
+                        }, 500);
                     }
                 });
             });
@@ -140,7 +150,8 @@ class World {
             let bottle = new ThrowableObject(
                 this.character.x + this.character.width / 2,
                 this.character.y + this.character.height / 2,
-                this.character // ✅ Pass character reference
+                this.character, 
+                this
             );
 
             this.throwableObjects.push(bottle);
@@ -165,7 +176,6 @@ class World {
         }
 
         mo.drawObject(this.ctx);
-        mo.drawFrame(this.ctx);
         mo.drawHitbox(this.ctx);
 
         if (mo.otherDirection) {
