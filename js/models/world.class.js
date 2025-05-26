@@ -133,7 +133,6 @@ class World {
             !this.throwFlag &&
             this.character.bottleCounter >= 1
         ) {
-            console.log("Character Facing Right:", this.character.isFacingRight);
             let bottle = new ThrowableObject(
                 this.character.x + this.character.width / 2,
                 this.character.y + this.character.height / 2,

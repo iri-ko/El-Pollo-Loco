@@ -100,13 +100,11 @@ class Character extends MovableObject {
             ) {
                 this.walkRight();
                 this.isFacingRight = true;
-                console.log(this.isFacingRight);
             }
 
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.walkLeft();
                 this.isFacingRight = false;
-                console.log(this.isFacingRight);
             }
 
             this.world.camera_x = -this.x + 100;

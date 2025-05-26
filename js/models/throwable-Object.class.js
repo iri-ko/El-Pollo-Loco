@@ -26,15 +26,15 @@ class ThrowableObject extends MovableObject {
     }
 
 throw() {
-    this.speedY = 25;
+    this.speedY = 35;
     this.applyGravity();
 
     let movementDirection;
 
     if (this.character.isFacingRight === true) {
-        movementDirection = 20; // Move right
+        movementDirection = 5; // Move right
     } else {
-        movementDirection = -20; // Move left
+        movementDirection = -5; // Move left
     }
 
     setInterval(() => {
