@@ -102,7 +102,8 @@ class World {
 
             this.level.enemies.forEach((enemy, index) => {
                 if (
-                    enemy instanceof Chicken &&
+                    (enemy instanceof Chicken ||
+                    enemy instanceof BabyChick) &&
                     this.character.jumpKill(enemy)
                 ) {
                     enemy.die(); // Trigger death animation
@@ -119,7 +120,10 @@ class World {
 
             this.throwableObjects.forEach((bottle) => {
                 this.level.enemies.forEach((enemy) => {
-                    if (enemy instanceof Chicken && bottle.isColliding(enemy)) {
+                    if ((enemy instanceof Chicken 
+                        || enemy instanceof BabyChick
+                    ) &&
+                        bottle.isColliding(enemy)) {
                         enemy.die();
                     }
                 });

@@ -33,6 +33,7 @@ class DrawableObject {
         if (
             this instanceof Character ||
             this instanceof Chicken ||
+            this instanceof BabyChick ||
             this instanceof SalsaBottle ||
             this instanceof Coin ||
             this instanceof ThrowableObject
@@ -49,6 +50,7 @@ class DrawableObject {
         if (
             this instanceof Character ||
             this instanceof Chicken ||
+            this instanceof BabyChick ||
             this instanceof SalsaBottle ||
             this instanceof Coin ||
             this instanceof ThrowableObject
