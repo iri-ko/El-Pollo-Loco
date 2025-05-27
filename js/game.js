@@ -10,7 +10,7 @@ function init(){
 
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39){
-        keyboard.RIGHT = true; // ✅ Correct — referencing the keyboard object
+        keyboard.RIGHT = true; 
     }
 
     if (event.keyCode == 37){
@@ -22,7 +22,7 @@ window.addEventListener("keydown", (event) => {
     }
 
     if (event.keyCode == 38){
-        keyboard.UP = true;  // ✅ Fix typo (previously DOWN instead of UP)
+        keyboard.UP = true;  // 
     }
 
     if (event.keyCode == 32){

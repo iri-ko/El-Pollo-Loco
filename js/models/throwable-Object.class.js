@@ -21,7 +21,7 @@ class ThrowableObject extends MovableObject {
             "assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png"
         );
         this.character = character;
-         this.world = world;
+        this.world = world;
         this.x = x;
         this.y = y;
         this.height = 60;
@@ -48,23 +48,23 @@ class ThrowableObject extends MovableObject {
         }
 
         setInterval(() => {
-            this.x += movementDirection; // ✅ Now using movementDirection correctly!
+            this.x += movementDirection; // 
         }, 25);
     }
 
 splash() {
-    this.isSplashing = true; // ✅ Ensures splash animation starts
+    this.isSplashing = true;
     this.playAnimation(this.IMAGES_SPLASHING); 
-    this.speedY = 0; // ✅ Stop movement
-    this.x += 0; // ✅ Prevent further movement
+    this.speedY = 0; 
+    this.x += 0; 
 
-    // ✅ Remove bottle after the splash animation completes
+
     setTimeout(() => {
         let index = this.world.throwableObjects.indexOf(this);
         if (index > -1) {
-            this.world.throwableObjects.splice(index, 1); // ✅ Bottle disappears after splash
+            this.world.throwableObjects.splice(index, 1); 
         }
-    }, this.IMAGES_SPLASHING.length * 100); // Adjust timing to fit animation length
+    }, this.IMAGES_SPLASHING.length * 100); 
 }
 
 

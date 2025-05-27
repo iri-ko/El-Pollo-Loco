@@ -1,6 +1,7 @@
 class World {
     //#region attributes
     character = new Character();
+
     level = level1;
 
     ctx;
@@ -15,6 +16,9 @@ class World {
 
     throwFlag = false;
     bottleFlag = false;
+    bossFlag = false;
+    enemyFlag = false;
+    showBossBar = false; // Initialize it as false
 
     //#endregion
 
@@ -24,6 +28,11 @@ class World {
         this.keyboard = keyboard;
         this.canvas = canvas;
         this.setWorld(keyboard);
+        this.level.enemies.forEach((enemy) => {
+            if (enemy instanceof Endboss) {
+                enemy.world = this; // Assigns the world instance to Endboss
+            }
+        });
     }
 
     setWorld() {
@@ -54,7 +63,9 @@ class World {
         //space for fixed elements
         this.addToMap(this.healthBar);
         this.addToMap(this.bottleBar);
-        this.addToMap(this.bossBar);
+        if (this.showBossBar) {
+            this.addToMap(this.bossBar); // Show boss health bar when active
+        }
 
         let self = this;
         //draw() wird immer wieder ausgeführt
@@ -126,19 +137,46 @@ class World {
                         (enemy instanceof Chicken ||
                             enemy instanceof BabyChick) &&
                         bottle.isColliding(enemy) &&
-                        !this.bottleFlag
+                        !this.enemyFlag
                     ) {
                         enemy.die();
                         bottle.splash();
-                        this.bottleFlag = true; // prevents multibale collisions
+                        this.enemyFlag = true;
 
                         setTimeout(() => {
-                            this.bottleFlag = false; 
-                        }, 500);
+                            this.enemyFlag = false;
+                        }, 1000);
+                    } else if (
+                        enemy instanceof Endboss &&
+                        bottle.isColliding(enemy) &&
+                        !this.bossFlag
+                    ) {
+                        enemy.hit();
+                        this.bossBar.setPercentage(enemy.energy);
+                        bottle.splash();
+                        console.log(
+                            "Boss hit! Remaining energy:",
+                            enemy.energy
+                        );
+
+                        this.bossFlag = true;
+
+                        setTimeout(() => {
+                            this.bossFlag = false;
+                        }, 1000);
                     }
                 });
             });
-        }, 200); // **Still checks often, but damage only happens once per second**
+
+            this.isApproachingBoss();
+        }, 200);
+    }
+
+    isApproachingBoss() {
+        if (this.character.x >= 1500) {
+            this.showBossBar = true; // show boss bar when character reaches x = 1500
+            this.character.bottleCounter += 12;
+        }
     }
 
     checkThrowObjects() {
@@ -150,7 +188,7 @@ class World {
             let bottle = new ThrowableObject(
                 this.character.x + this.character.width / 2,
                 this.character.y + this.character.height / 2,
-                this.character, 
+                this.character,
                 this
             );
 

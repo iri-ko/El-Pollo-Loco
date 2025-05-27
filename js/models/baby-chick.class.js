@@ -13,8 +13,8 @@ class BabyChick extends MovableObject {
         this.height = 80;
         this.width = 70;
         this.speed = 0.35 + Math.random() * 0.25;
+        this.offset = { top: 8, bottom: 8, left: 8, right: 8 };
         this.animate(this.speed);
-        this.offset = { top: 7, bottom: 6, left: 7, right: 5 };
     }
 
     animate() {
@@ -24,7 +24,7 @@ class BabyChick extends MovableObject {
         //this.moveLeft();
     }
 
-    die() { 
+    die() {
         this.loadImage(
             "assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png"
         ); // Show "dead" sprite
