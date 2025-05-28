@@ -1,25 +1,19 @@
 class BabyChick extends MovableObject {
-    IMAGES_WALKING_BABY = [
-        "assets/img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
-        "assets/img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
-        "assets/img/3_enemies_chicken/chicken_small/1_walk/3_w.png",
-    ];
-
     constructor() {
         super();
-        this.loadImages(this.IMAGES_WALKING_BABY);
+        this.loadImages(ImageHub.babyChick.walk);
         this.x = 550 + Math.random() * 300;
         this.y = 360;
         this.height = 80;
         this.width = 70;
-        this.speed = 0.35 + Math.random() * 0.25;
+        this.speed = 0.35 + Math.random() *   5;
         this.offset = { top: 8, bottom: 8, left: 8, right: 8 };
         this.animate(this.speed);
     }
 
     animate() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING_BABY);
+            this.playAnimation(ImageHub.babyChick.walk);
         }, 80);
         //this.moveLeft();
     }
