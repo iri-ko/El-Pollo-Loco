@@ -56,7 +56,7 @@ class World {
     }
 
     addChecks() {
-        IntervalHub.startInterval(this.checkCollisions, 200)
+        IntervalHub.startInterval(this.checkCollisions, 200);
         this.checkThrowObjects();
     }
 
@@ -93,35 +93,40 @@ class World {
 
     //#region checkCollisions
     checkCollisions = () => {
-        
-            this.checkCharacterEnemyCollision();
-            this.checkCharacterCoinCollision();
-            this.checkCharacterSalsaCollision();
-            this.checkJumpKill();
-            this.checkThrowCollision();
-            this.isApproachingBoss();
-        
-    }
+        this.checkCharacterEnemyCollision();
+        this.checkCharacterCoinCollision();
+        this.checkCharacterSalsaCollision();
+        this.checkJumpKill();
+        this.checkThrowCollision();
+        this.isApproachingBoss();
+    };
 
     checkCharacterEnemyCollision() {
-        this.level.enemies.forEach((enemy) => {
-            if (
-                this.character.isColliding(enemy) &&
-                !this.character.jumpKill(enemy)
-            ) {
+    this.level.enemies.forEach((enemy) => {
+        if (this.character.isColliding(enemy)) {
+            
+            if (enemy instanceof Endboss) {
+                AudioHub.playOne(AudioHub.bossAttack); 
+            }
+
+            if (!this.character.jumpKill(enemy)) {
                 let timeSinceLastHit = Date.now() - this.character.lastHit;
 
                 if (timeSinceLastHit > 1000) {
+                    AudioHub.playOne(AudioHub.characterHurt);
                     this.character.hit();
                     this.healthBar.setPercentage(this.character.energy);
                 }
             }
-        });
-    }
+        }
+    });
+}
+
 
     checkCharacterCoinCollision() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
+                AudioHub.playOne(AudioHub.coinCollect);
                 this.character.coinCounter++;
                 this.level.coins.splice(index, 1); //removes coin
 
@@ -137,6 +142,7 @@ class World {
     checkCharacterSalsaCollision() {
         this.level.salsaBottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
+                AudioHub.playOne(AudioHub.bottleCollect);
                 this.character.bottleCounter++;
                 this.level.salsaBottles.splice(index, 1); //removes coin
                 let newPercentage = Math.min(
@@ -154,6 +160,7 @@ class World {
                 (enemy instanceof Chicken || enemy instanceof BabyChick) &&
                 this.character.jumpKill(enemy)
             ) {
+                AudioHub.playOne(AudioHub.jumpKill);
                 enemy.die(); // Trigger death animation
                 this.character.speedY = 10; // makes jump bouncy :D
                 this.level.enemies.splice(index, 1); // Remove chicken from the game
@@ -166,7 +173,7 @@ class World {
             }
         });
     }
-s
+    
     checkThrowCollision() {
         this.throwableObjects.forEach((bottle) => {
             this.level.enemies.forEach((enemy) => {
@@ -175,6 +182,7 @@ s
                     bottle.isColliding(enemy) &&
                     !this.enemyFlag
                 ) {
+                    AudioHub.playOne(AudioHub.bottleSplash);
                     this.enemyHit(enemy, bottle);
                     this.handleEnemyFlag();
                 } else if (
@@ -182,6 +190,7 @@ s
                     bottle.isColliding(enemy) &&
                     !this.bossFlag
                 ) {
+                    AudioHub.playOne(AudioHub.bottleSplash);
                     this.bossHit(enemy, bottle);
                     this.handleBossFlag();
                 }
@@ -189,31 +198,30 @@ s
         });
     }
 
-
-    enemyHit(enemy, bottle){
+    enemyHit(enemy, bottle) {
         enemy.die();
         bottle.splash();
     }
 
-    bossHit(enemy, bottle){
+    bossHit(enemy, bottle) {
         enemy.hit();
-                    this.bossBar.setPercentage(enemy.energy);
-                    bottle.splash();
+        this.bossBar.setPercentage(enemy.energy);
+        bottle.splash();
     }
 
-    handleEnemyFlag(){
+    handleEnemyFlag() {
         this.enemyFlag = true;
-                    setTimeout(() => {
-                        this.enemyFlag = false;
-                    }, 1000);
+        setTimeout(() => {
+            this.enemyFlag = false;
+        }, 1000);
     }
 
-    handleBossFlag(){
+    handleBossFlag() {
         this.bossFlag = true;
 
-                    setTimeout(() => {
-                        this.bossFlag = false;
-                    }, 1000);
+        setTimeout(() => {
+            this.bossFlag = false;
+        }, 1000);
     }
 
     isApproachingBoss() {
@@ -225,6 +233,7 @@ s
 
     //#endregion
 
+    //#region checkThrowObjects
     checkThrowObjects() {
         if (
             this.keyboard.DOWN &&
@@ -239,20 +248,21 @@ s
             );
 
             this.throwableObjects.push(bottle);
-            
+
             this.character.bottleCounter -= 1;
-            
+
             this.handleThrowFlag();
         }
     }
 
-    handleThrowFlag(){
+    handleThrowFlag() {
         this.throwFlag = true;
-            
-            setTimeout(() => {
-                this.throwFlag = false;
-            }, 500);
+
+        setTimeout(() => {
+            this.throwFlag = false;
+        }, 500);
     }
+    //#endregion
 
     addObjectsToMap(objects) {
         objects.forEach((o) => {

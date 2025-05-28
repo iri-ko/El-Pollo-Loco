@@ -33,6 +33,8 @@ class ThrowableObject extends MovableObject {
         IntervalHub.startInterval(this.applyGravity, 25);
 
         IntervalHub.startInterval(this.moveX, 25);
+
+        AudioHub.playOne(AudioHub.bottleSpin);
     }
 
     moveX = () => {
