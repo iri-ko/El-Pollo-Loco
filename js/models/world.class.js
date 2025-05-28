@@ -12,13 +12,14 @@ class World {
     healthBar = new HealthBar();
     bottleBar = new BottleBar();
     bossBar = new BossBar();
+    coinBar = new CoinBar();
     throwableObjects = [];
 
     throwFlag = false;
     bottleFlag = false;
     bossFlag = false;
     enemyFlag = false;
-    showBossBar = false; // Initialize it as false
+    showBossBar = false;
 
     //#endregion
 
@@ -63,6 +64,7 @@ class World {
         //space for fixed elements
         this.addToMap(this.healthBar);
         this.addToMap(this.bottleBar);
+        this.addToMap(this.coinBar);
         if (this.showBossBar) {
             this.addToMap(this.bossBar); // Show boss health bar when active
         }
@@ -99,6 +101,12 @@ class World {
                 if (this.character.isColliding(coin)) {
                     this.character.coinCounter++;
                     this.level.coins.splice(index, 1); //removes coin
+
+                    let newPercentage = Math.min(
+                        (this.character.coinCounter / 5) * 100 // Adjust scaling as needed
+                    );
+
+                    this.coinBar.setPercentage(newPercentage);
                 }
             });
 

@@ -73,9 +73,9 @@ splash() {
    animate() {
     setInterval(() => {
         if (this.isSplashing) {
-            this.playAnimation(this.IMAGES_SPLASHING); // ✅ Correct animation trigger
+            this.playAnimation(this.IMAGES_SPLASHING); 
         } else {
-            this.playAnimation(this.IMAGES_SPINNING); // ✅ Keep spinning until splash
+            this.playAnimation(this.IMAGES_SPINNING); 
         }
     }, 60);
 }
