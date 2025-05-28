@@ -1,14 +1,14 @@
-class SalsaBottle extends MovableObject {
+class SalsaBottle extends DrawableObject {
+    x = 49 + Math.random() * 1500;
+    y = 360;
+    height = 80;
+    width = 80;
+    offset = { top: 15, bottom: 10, left: 35, right: 18 };
+
     constructor() {
         super();
         this.loadImage(
             "assets/img/6_salsa_bottle/s1_salsa_bottle_on_ground.png"
-        ); //super übergeordnete FUnkiton -> MovalbeObject
-
-        this.x = 49 + Math.random() * 1500;
-        this.y = 360;
-        this.height = 80;
-        this.width = 80;
-        this.offset = { top: 15, bottom: 10, left: 35, right: 18 };
+        ); 
     }
 }

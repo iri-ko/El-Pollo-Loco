@@ -1,21 +1,28 @@
 class Chicken extends MovableObject {
+    
+    //#region attributes
+    x =  250 + Math.random() * 300;
+    y = 360;
+    height = 80;
+    width = 70;
+    speed = 0.35 + Math.random() * 0.25;
+    offset = { top: 4, bottom: 4, left: 4, right: 4 };
+
+    //#endregion
+
     constructor() {
         super();
         this.loadImages(ImageHub.chicken.walk);
-        this.x = 250 + Math.random() * 300;
-        this.y = 360;
-        this.height = 80;
-        this.width = 70;
-        this.speed = 0.35 + Math.random() * 0.25;
-        this.animate(this.speed);
-        this.offset = { top: 4, bottom: 4, left: 4, right: 4 };
+        this.animate();
     }
 
     animate() {
-        setInterval(() => {
+        IntervalHub.startInterval(this.animateChicken, 80)
+        //IntervalHub.startInterval(this.moveLeft, 17);
+    }
+
+    animateChicken = () => {
             this.playAnimation(ImageHub.chicken.walk);
-        }, 80);
-        //this.moveLeft();
     }
 
     die() {

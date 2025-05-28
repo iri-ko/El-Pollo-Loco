@@ -3,31 +3,21 @@ class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false; //für Spiegeln beim links/rechts laufen
     speedY = 0;
-
     offeset;
     lastHit = 0;
     acceleration = 2;
+
     //#endregion
 
     constructor() {
         super();
-        this.x = 100;
-        this.y = 200;
-        this.width = 150;
-        this.height = 250;
-        this.img;
-        this.speed = 0.15;
-        this.offset = { top: 0, bottom: 0, left: 0, right: 0 };
     }
 
-    applyGravity() {
-        //damit Pepe und Bottle runterfällt
-        setInterval(() => {
+    applyGravity = () => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
-            }
-        }, 1000 / 25);
+            };
     }
 
     //#region conditions
@@ -98,17 +88,12 @@ class MovableObject extends DrawableObject {
         this.otherDirection = true;
     }
 
-    moveLeft() {
-        setInterval(() => {
+    moveLeft = () => {
             this.x -= this.speed; // X gets reduced by 5 according to set time
-        }, 1000 / 60); //set time
     }
 
-    moveRight() {
-        setInterval(() => {
-            this.speed = 5;
+    moveRight = () => {
             this.x += this.speed; // X gets reduced by 5 according to set time
-        }, 1000 / 60); //set time
     }
     //#endregion
 

@@ -1,9 +1,9 @@
 class CoinBar extends StatusBar {
+    x = 20;
+    y = 100;
+
     constructor() {
         super(ImageHub.coinBar);
-        this.x = 20;
-        this.y = 100;
-
         this.setPercentage(0);
     }
 }

@@ -1,9 +1,9 @@
 class BottleBar extends StatusBar {
+    x = 20; 
+    y = 40;
+    
     constructor() {
         super(ImageHub.bottleBar);
-        this.x = 20;
-        this.y = 40;
-
         this.setPercentage(0);
     }
 }

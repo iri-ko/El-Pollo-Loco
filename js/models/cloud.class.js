@@ -1,19 +1,17 @@
-class Cloud extends MovableObject{
+class Cloud extends MovableObject {
     height = 180;
     speed = 0.15;
-    
-        constructor(){
+    y = 20;
+    width = 500;
+    x = Math.random() * 500;
+
+    constructor() {
         super();
-        this.loadImage('assets/img/5_background/layers/4_clouds/w1.png'); //super übergeordnete FUnkiton -> MovalbeObject
-
-        this.y = 20;
-        this.width = 500;
-
-        this.x = Math.random() * 500;
+        this.loadImage("assets/img/5_background/layers/4_clouds/w1.png"); //super übergeordnete FUnkiton -> MovalbeObject
         this.animate();
     }
 
-    animate(){
-        this.moveLeft();
+    animate() {
+        IntervalHub.startInterval(this.moveLeft, 17);
     }
 }

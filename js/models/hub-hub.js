@@ -143,22 +143,40 @@ class ImageHub {
     ];
 
     static bottleBar = [
-         "assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
-            "assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png",
-            "assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/60.png",
-            "assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/40.png",
-            "assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png",
-            "assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png",
+        "assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
+        "assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png",
+        "assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/60.png",
+        "assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/40.png",
+        "assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png",
+        "assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png",
     ];
 
     static coinBar = [
         "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/100.png",
-            "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/80.png",
-            "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/60.png",
-            "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/40.png",
-            "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/20.png",
-            "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/0.png",
-    ]
+        "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/80.png",
+        "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/60.png",
+        "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/40.png",
+        "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/20.png",
+        "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/0.png",
+    ];
+
+    static bottle = {
+        spin: [
+            "assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
+            "assets/img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png",
+            "assets/img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png",
+            "assets/img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png",
+        ],
+
+        splash: [
+            "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png",
+            "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png",
+            "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png",
+            "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png",
+            "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png",
+            "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
+        ],
+    };
 }
 
 // class AudioHub {
@@ -206,3 +224,16 @@ class ImageHub {
 //         });
 //     }
 // }
+
+class IntervalHub {
+    static allIntervals = [];
+
+    static startInterval(func, timer) {
+        const newInterval = setInterval(func, timer);
+        IntervalHub.allIntervals.push(newInterval);
+    }
+
+    static stopAllIntervals() {
+        IntervalHub.allIntervals.forEach(clearInterval);
+    }
+}
