@@ -3,7 +3,7 @@ class Character extends MovableObject {
     world;
     currentImage = 0;
     y = 200;
-    offset = { top: 130, bottom: 30, left: 50, right: 50 }
+    offset = { top: 130, bottom: 30, left: 50, right: 50 };
 
     acceleration = 2;
 
@@ -15,16 +15,15 @@ class Character extends MovableObject {
     isFacingRight = true;
     //#endregion
 
-
     constructor() {
         super();
         this.loadAllCharacterImages();
         this.animate();
         this.lastActivityTime = Date.now();
-         IntervalHub.startInterval(this.applyGravity, 40)
+        IntervalHub.startInterval(this.applyGravity, 40);
     }
 
-    loadAllCharacterImages(){
+    loadAllCharacterImages() {
         this.loadImage("assets/img/2_character_pepe/2_walk/W-21.png");
         this.loadImages(ImageHub.character.walk);
         this.loadImages(ImageHub.character.idle);
@@ -64,43 +63,38 @@ class Character extends MovableObject {
     };
 
     handleMovementAnimation = () => {
-        let lastActivityTime = Date.now();
+    if (this.isAboveGround()) {
+        this.playAnimation(ImageHub.character.jump);
+    } else if (this.isDead()) {
+        this.playAnimation(ImageHub.character.dead);
+    } else if (this.isHurt()) {
+        this.playAnimation(ImageHub.character.hurt);
+    } else {
+        let currentTime = Date.now();
+        let timeElapsed = currentTime - this.lastActivityTime;
 
-        if (this.isAboveGround()) {
-            this.playAnimation(ImageHub.character.jump);
-        } else if (this.isDead()) {
-            this.playAnimation(ImageHub.character.dead);
-        } else if (this.isHurt()) {
-            this.playAnimation(ImageHub.character.hurt);
-        } else {
-            if (
-                !this.world.keyboard.RIGHT &&
-                !this.world.keyboard.LEFT &&
-                !this.world.keyboard.UP &&
-                !this.world.keyboard.DOWN &&
-                !this.world.keyboard.SPACE
-            ) {
-                let currentTime = Date.now();
-                let timeElapsed = currentTime - lastActivityTime;
-
-                if (timeElapsed >= 7000) {
-                    this.playAnimation(ImageHub.character.idleLong);
-                } else {
-                    this.playAnimation(ImageHub.character.idle);
-                }
+        if (
+            !this.world.keyboard.RIGHT &&
+            !this.world.keyboard.LEFT &&
+            !this.world.keyboard.UP &&
+            !this.world.keyboard.DOWN &&
+            !this.world.keyboard.SPACE
+        ) {
+            if (timeElapsed >= 7000) {
+                this.playAnimation(ImageHub.character.idleLong);
             } else {
-                lastActivityTime = Date.now(); // **Reset inactivity timer whenever movement occurs**
+                this.playAnimation(ImageHub.character.idle);
             }
-
-            this.currentImage++;
+        } else {
+            this.lastActivityTime = Date.now(); // **Corrected: Updating class-level variable**
         }
 
-        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-            this.speedY = 20;
-        }
+        this.currentImage++;
+    }
 
-        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-            this.jump();
-        }
-    };
+    if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+        this.jump();
+    }
+};
+
 }

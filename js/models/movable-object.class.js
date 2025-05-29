@@ -14,11 +14,13 @@ class MovableObject extends DrawableObject {
     }
 
     applyGravity = () => {
-            if (this.isAboveGround() || this.speedY > 0) {
-                this.y -= this.speedY;
-                this.speedY -= this.acceleration;
-            };
-    }
+        if (this.isAboveGround() || this.speedY > 0) {
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
+        } else {
+            this.speedY = 0; // speed stays 0 once grounded (to avoid triggering jumpKill when not jumping)
+        }
+    };
 
     //#region conditions
     isAboveGround() {
@@ -41,27 +43,32 @@ class MovableObject extends DrawableObject {
 
     jumpKill(chicken) {
         return (
-            this.speedY < 0 && //character falling
+            this.speedY < 0 && // Character must be falling
             this.y + this.height - this.offset.bottom >=
-                chicken.y + chicken.offset.top && // feet land on top
+                chicken.y + chicken.offset.top && // Feet land on top
             this.y + this.height - this.offset.bottom <
-                chicken.y + chicken.height && // prevent false triggers
+                chicken.y + chicken.height + 10 && // Small buffer to prevent false triggers
             this.x + this.offset.left <
-                chicken.x + chicken.width - chicken.offset.right && // hrizontal alignment
+                chicken.x + chicken.width - chicken.offset.right && // Horizontal alignment
             this.x + this.width - this.offset.right >
-                chicken.x + chicken.offset.left // horizontal alignment
+                chicken.x + chicken.offset.left // Horizontal alignment
         );
     }
 
-    hit() {
-        this.energy -= 20;
-        if (this.energy <= 0) {
-            this.energy = 0;
-        } else {
-            this.lastHit = Date.now(); // Ensures fresh timestamp
-            this.currentImage = 0; // **Reset animation frame to start the hurt animation**
-        }
+hit() {
+    this.energy -= 20;
+
+    if (this.energy <= 0) {
+        this.energy = 0; // **This guarantees energy never drops below 0**
+        this.lastHit = Date.now();
+    } else {
+        this.lastHit = Date.now();
+        this.currentImage = 0; // Reset animation frame
     }
+}
+
+
+
     //#endregion
 
     //#region hurt/dead
@@ -89,12 +96,12 @@ class MovableObject extends DrawableObject {
     }
 
     moveLeft = () => {
-            this.x -= this.speed; // X gets reduced by 5 according to set time
-    }
+        this.x -= this.speed; // X gets reduced by 5 according to set time
+    };
 
     moveRight = () => {
-            this.x += this.speed; // X gets reduced by 5 according to set time
-    }
+        this.x += this.speed; // X gets reduced by 5 according to set time
+    };
     //#endregion
 
     jump() {

@@ -102,26 +102,45 @@ class World {
     };
 
     checkCharacterEnemyCollision() {
-    this.level.enemies.forEach((enemy) => {
-        if (this.character.isColliding(enemy)) {
-            
-            if (enemy instanceof Endboss) {
-                AudioHub.playOne(AudioHub.bossAttack); 
-            }
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                if (!this.character.jumpKill(enemy)) {
+                    let timeSinceLastHit = Date.now() - this.character.lastHit;
 
-            if (!this.character.jumpKill(enemy)) {
-                let timeSinceLastHit = Date.now() - this.character.lastHit;
+                    if (timeSinceLastHit > 1000) {
+                        this.character.hit();
+                        this.healthBar.setPercentage(this.character.energy);
 
-                if (timeSinceLastHit > 1000) {
-                    AudioHub.playOne(AudioHub.characterHurt);
-                    this.character.hit();
-                    this.healthBar.setPercentage(this.character.energy);
+                        if (this.character.isDead()) {
+                            // **Trigger game over**
+                            this.gameOver();
+                        }
+                    }
                 }
             }
-        }
-    });
-}
+        });
+    }
 
+    gameOver() {
+
+        // **Initialize image BEFORE referencing it**
+        let gameOverImg = new Image();
+        gameOverImg.src =
+            "assets/img/9_intro_outro_screens/game_over/oh no you lost!.png";
+
+        gameOverImg.onload = () => {
+        
+
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.drawImage(
+                gameOverImg,
+                0,
+                0,
+                this.canvas.width,
+                this.canvas.height
+            );
+        };
+    }
 
     checkCharacterCoinCollision() {
         this.level.coins.forEach((coin, index) => {
@@ -173,7 +192,7 @@ class World {
             }
         });
     }
-    
+
     checkThrowCollision() {
         this.throwableObjects.forEach((bottle) => {
             this.level.enemies.forEach((enemy) => {

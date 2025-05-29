@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="assets/img/3_enemies_chicken/chicken_normal/1_walk/w1_w.png">
 </head>
-<body onload="init()">
+<body>
 
 
     <div class="content">
@@ -25,7 +25,23 @@
     <div class="keyboard"><span>THROW BOTTLE: </span><span>DOWN ARROW</span></div>
 </div>
 
+<div class="gameover-screen screen d-none" id="gameover">
+    <button id="try-again">Try again</button>
 </div>
+
+<div class="win-screen screen d-none" id="win">
+    <button id="play-again">Play again</button>
+</div>
+
+<div class="start-screen screen d-flex" id="start">
+    <button onclick="startGame()" id="start-game">Start game</button>
+</div>
+
+</div>
+
+
+
+
 
 <script src="./js/models/hub-hub.js"></script>
 <script src="./js/models/drawableObject.class.js"></script>
