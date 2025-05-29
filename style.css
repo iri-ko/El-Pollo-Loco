@@ -1,9 +1,59 @@
+@font-face {
+    font-family: RioGrande;
+    src: url("fonts/RioGrande Striped.ttf");
+}
+
+@font-face {
+    font-family: RioGrande;
+    src: url("fonts/RioGrande Striped.ttf");
+    font-weight: bold;
+}
+
 canvas {
     background-color: black;
+    margin-bottom: 50px;
 }
 
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    font-family: RioGrande;
+    background-image: url("./assets/img/10_page_background/background.png");
+    background-size: cover;
+}
+
+.content {
+    width: 100%;
+    max-width: 1920px;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    background-color: rgb(136, 16, 22);
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+}
+
+.controls {
+    background-color: rgb(136, 16, 22);
+    color: white;
+    padding: 10px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 40%;
+    border-radius: 10px;
+}
+
+.keyboard {
+    display: flex;
+    justify-content: space-between;
 }
