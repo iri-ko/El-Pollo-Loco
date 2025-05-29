@@ -26,15 +26,15 @@
 </div>
 
 <div class="gameover-screen screen d-none" id="gameover">
-    <button id="try-again">Try again</button>
+    <button onclick="startGame('gameover', 'try-again')" id="try-again">Try again</button>
 </div>
 
 <div class="win-screen screen d-none" id="win">
-    <button id="play-again">Play again</button>
+    <button onclick="startGame('win', 'play-again')" id="play-again">Play again</button>
 </div>
 
 <div class="start-screen screen d-flex" id="start">
-    <button onclick="startGame()" id="start-game">Start game</button>
+    <button onclick="startGame('start', 'start-game')" id="start-game">Start game</button>
 </div>
 
 </div>

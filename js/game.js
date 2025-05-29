@@ -2,20 +2,50 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
-function startGame(){
-    canvas = document.getElementById('canvas'); //zugreifen auf Canvas
-    world = new World(canvas, keyboard); //neues Object mit World wird kreeiert, Canvas wird mitgegeben.
-    makeStartScreenInvisible();
+function startGame(screenID, buttonID) {
+
+    resetGameState();
+    canvas = document.getElementById("canvas");
+    world = new World(canvas, keyboard);
+
+    makeScreenInvisible(screenID, buttonID);
 }
 
-function makeStartScreenInvisible(){
-    const startRef = document.getElementById("start");
-    const startScreenRef = document.getElementById("start-game");
-    startRef.classList.remove("d-flex");
-    startRef.classList.add("d-none")
-    startScreenRef.classList.remove("d-flex");
-    startScreenRef.classList.add("d-none")
+function resetGameState() {
+    if (world) {
+        world.gameOverFlag = false;
+        world.showBossBar = false;
+
+        // Reset player stats
+        world.character.energy = 100;
+        world.character.coinCounter = 0;
+        world.character.bottleCounter = 0;
+
+        // Reset enemy health
+        world.level.enemies.forEach((enemy) => {
+            if (enemy instanceof Endboss) {
+                enemy.energy = 100;
+            }
+        });
+
+    }
 }
+
+
+
+
+
+
+function makeScreenInvisible(screenID, buttonID){
+    const screenRef = document.getElementById(`${screenID}`);
+    const buttonRef = document.getElementById(`${buttonID}`);
+    screenRef.classList.remove("d-flex");
+    screenRef.classList.add("d-none")
+    buttonRef.classList.remove("d-flex");
+    buttonRef.classList.add("d-none")
+}
+
+
 
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39){

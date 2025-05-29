@@ -65,7 +65,7 @@ class DrawableObject {
                 this.width - this.offset.left - this.offset.right,
                 this.height - this.offset.top - this.offset.bottom
             );
-            ctx.stroke();
+            //ctx.stroke();
         }
     }
     //#endregion
