@@ -14,7 +14,7 @@ canvas {
     display: block;
     margin-bottom: 50px;
 
-    @media (max-width: 900px) {
+    @media (max-width: 932px) {
         width: 100%;
     }
 
@@ -50,7 +50,7 @@ h1 {
     color: white;
     border-radius: 10px;
 
-    @media (max-width: 900px) {
+    @media (max-width: 932px) {
         display: none;
     }
 }
@@ -66,7 +66,7 @@ h1 {
     width: 40%;
     border-radius: 10px;
 
-    @media (max-width: 900px) {
+    @media (max-width: 932px) {
         width: 100%;
         position: absolute;
         z-index: 20;
@@ -107,7 +107,7 @@ h1 {
     align-items: flex-end;
     justify-content: center;
 
-    @media (max-width: 900px) {
+    @media (max-width: 932px) {
         width: 100%;
         top: 0;
     }
@@ -158,30 +158,27 @@ button:hover {
     flex-direction: column;
     justify-content: space-between;
 
-  
-
     .volume {
         display: flex;
         justify-content: flex-end;
         padding: 20px;
+        z-index: 80;
     }
-    
+
     .buttons-bottom {
         display: flex;
         justify-content: space-between;
         padding: 10px;
 
         .butt {
-        display: flex;
-        gap: 20px;
-    }
+            display: flex;
+            gap: 20px;
+        }
 
         @media (min-width: 760px) {
-        _display: none;
+            display: none;
+        }
     }
-    }
-
-    
 
     img {
         background-color: rgb(69, 126, 16);
@@ -192,10 +189,27 @@ button:hover {
         padding: 5px;
     }
 
-     img:hover {
-            cursor: pointer;
-            background-color: aqua;
-        }
+    img:hover {
+        cursor: pointer;
+        background-color: aqua;
+    }
+}
+
+.horizontal {
+    display: none;
+
+    @media ((orientation: portrait) and (max-width: 932px)) {
+        display: flex;
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        background-color: rgb(241, 205, 0);
+        z-index: 50;
+        align-items: center;
+        justify-content: center;
+        font-size: 50px;
+        text-align: center;
+    }
 }
 
 .d-flex {
