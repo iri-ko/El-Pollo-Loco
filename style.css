@@ -14,11 +14,11 @@ canvas {
     display: block;
     margin-bottom: 50px;
 
-    @media (max-width: 760px) {
+    @media (max-width: 900px) {
         width: 100%;
     }
 
-    @media (max-height: 480px) {
+    @media (max-height: 500px) {
         height: 100vh;
     }
 }
@@ -50,7 +50,7 @@ h1 {
     color: white;
     border-radius: 10px;
 
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
         display: none;
     }
 }
@@ -66,7 +66,7 @@ h1 {
     width: 40%;
     border-radius: 10px;
 
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
         width: 100%;
         position: absolute;
         z-index: 20;
@@ -100,24 +100,24 @@ h1 {
     width: 760px;
     height: 480px;
     top: 100px;
-    background-color: rgb(165, 33, 33);
-    background-size: cover;
-    background-position: right;
+    background-color: rgb(31, 10, 10);
+    background-size: contain; /* Ensures the whole image is visible */
+    background-repeat: no-repeat; /* Prevents tiling */
+    background-position: center; /* Centers the image */
+    align-items: flex-end;
+    justify-content: center;
 
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
         width: 100%;
         top: 0;
     }
 
-    @media (max-height: 480px) {
+    @media (max-height: 500px) {
         height: 100vh;
     }
 }
 
 button {
-    position: absolute;
-    bottom: 50px;
-    left: 250px;
     font-family: RioGrande;
     background-color: rgb(231, 177, 27);
     font-size: 36px;
@@ -125,6 +125,7 @@ button {
     padding: 10px;
     border-radius: 10px;
     box-shadow: 5px 5px 5px 5px rgba(32, 23, 12, 0.2);
+    margin-bottom: 20px;
 }
 
 button:hover {

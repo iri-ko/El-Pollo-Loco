@@ -135,6 +135,7 @@ gameOver() {
     let tryAgainButton = document.getElementById("try-again");
 
     gameoverScreen.classList.remove("d-none");
+    gameoverScreen.classList.add("d-flex")
     tryAgainButton.classList.remove("d-none"); // **Ensure button is visible**
     tryAgainButton.style.display = "block"; // **Guarantees it appears**
 }
@@ -223,7 +224,9 @@ gameOver() {
     winGame() {
     IntervalHub.stopAllIntervals();
 
+
     document.getElementById("win").classList.remove("d-none"); // Show win screen
+    document.getElementById("win").classList.add("d-flex");
     document.getElementById("play-again").classList.remove("d-none"); // Show button
     document.getElementById("play-again").style.display = "block"; // Ensure visibility
 }
