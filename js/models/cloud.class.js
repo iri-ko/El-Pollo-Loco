@@ -12,6 +12,6 @@ class Cloud extends MovableObject {
     }
 
     animate() {
-        IntervalHub.startInterval(this.moveLeft, 17);
+        IntervalHub.startInterval(this.moveLeft, 17, "cloudMoveleft");
     }
 }

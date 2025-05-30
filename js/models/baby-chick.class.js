@@ -1,9 +1,9 @@
 class BabyChick extends MovableObject {
-    x = 550 + Math.random() * 300;
+    x = 750 + Math.random() * 700;
     y = 390;
     height= 50;
     width = 50;
-    speed = 0.35 + Math.random() * 5;
+    speed = 0.35 + Math.random() * 3;
     offset = { top: 8, bottom: 8, left: 8, right: 8 };
 
     constructor() {
@@ -13,8 +13,8 @@ class BabyChick extends MovableObject {
     }
 
     animate = () => {
-        IntervalHub.startInterval(this.animateBabyChick, 80);
-        //IntervalHub.startInterval(this.moveLeft, 17);
+        IntervalHub.startInterval(this.animateBabyChick, 80, "animateBabyChicken");
+        IntervalHub.startInterval(this.moveLeft, 17, "babyChickenMoveleft");
     };
 
     animateBabyChick = () => {

@@ -1,13 +1,12 @@
 class Chicken extends MovableObject {
     
     //#region attributes
-    x =  250 + Math.random() * 300;
+    x =  550 + Math.random() * 700;
     y = 360;
     height = 80;
     width = 70;
     speed = 0.35 + Math.random() * 0.25;
     offset = { top: 4, bottom: 4, left: 4, right: 4 };
-
     //#endregion
 
     constructor() {
@@ -17,12 +16,12 @@ class Chicken extends MovableObject {
     }
 
     animate() {
-        IntervalHub.startInterval(this.animateChicken, 80)
-        //IntervalHub.startInterval(this.moveLeft, 17);
+        IntervalHub.startInterval(this.animateChicken, 80, "chickenAnimate")
+        IntervalHub.startInterval(this.moveLeft, 17, "chickenMoveLeft");
     }
 
     animateChicken = () => {
-            this.playAnimation(ImageHub.chicken.walk);
+        this.playAnimation(ImageHub.chicken.walk);
     }
 
     die() {

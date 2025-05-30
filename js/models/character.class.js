@@ -20,7 +20,7 @@ class Character extends MovableObject {
         this.loadAllCharacterImages();
         this.animate();
         this.lastActivityTime = Date.now();
-        IntervalHub.startInterval(this.applyGravity, 40);
+        IntervalHub.startInterval(this.applyGravity, 40, "characterApplyGrav");
     }
 
     loadAllCharacterImages() {
@@ -34,8 +34,8 @@ class Character extends MovableObject {
     }
 
     animate() {
-        IntervalHub.startInterval(this.checkDirection, 16);
-        IntervalHub.startInterval(this.handleMovementAnimation, 200);
+        IntervalHub.startInterval(this.checkDirection, 16, "characterCheckDirection");
+        IntervalHub.startInterval(this.handleMovementAnimation, 200, "characHandleMove");
     }
 
     checkDirection = () => {

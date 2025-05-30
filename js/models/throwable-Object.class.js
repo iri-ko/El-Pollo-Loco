@@ -17,7 +17,7 @@ class ThrowableObject extends MovableObject {
 
         this.loadImagesBottle();
 
-        IntervalHub.startInterval(this.animateThrowBottle, 60)
+        IntervalHub.startInterval(this.animateThrowBottle, 60, "throwAnima")
 
 
         this.throw(100, 150);
@@ -30,9 +30,9 @@ class ThrowableObject extends MovableObject {
 
     throw() {
         this.speedX = this.character.isFacingRight ? 15 : -15;
-        IntervalHub.startInterval(this.applyGravity, 25);
+        IntervalHub.startInterval(this.applyGravity, 25, "throwGravi");
 
-        IntervalHub.startInterval(this.moveX, 25);
+        IntervalHub.startInterval(this.moveX, 25, "throwMovex");
 
         AudioHub.playOne(AudioHub.bottleSpin);
     }

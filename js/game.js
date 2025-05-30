@@ -2,35 +2,42 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
+const worlds = [];
+
 function startGame(screenID, buttonID) {
-
-    resetGameState();
     canvas = document.getElementById("canvas");
-    world = new World(canvas, keyboard);
-
+    resetGameState();
+    if(worlds.length == 0){
+        worlds.push(new World(canvas, keyboard));
+    }
     makeScreenInvisible(screenID, buttonID);
 }
 
 function resetGameState() {
-    if (world) {
-        world.gameOverFlag = false;
-        world.showBossBar = false;
+    if (worlds.length == 1) {
+        worlds.splice(0, 1, new World(canvas, keyboard));
 
-        // Reset player stats
-        world.character.energy = 100;
-        world.character.coinCounter = 0;
-        world.character.bottleCounter = 0;
+        // world.gameOverFlag = false;
+        // world.showBossBar = false;
 
-        // Reset enemy health
-        world.level.enemies.forEach((enemy) => {
-            if (enemy instanceof Endboss) {
-                enemy.energy = 100;
-            }
-        });
+        // // Reset player stats
+        // world.character.energy = 100;
+        // world.character.coinCounter = 0;
+        // world.character.bottleCounter = 0;
 
+        // // Reset enemy health
+        // world.level.enemies.forEach((enemy) => {
+        //     if (enemy instanceof Endboss) {
+        //         enemy.energy = 100;
+        //     }
+        // });
     }
 }
 
+function controlsInvisible(){
+    const closeRef = document.getElementById("controlPanal");
+    closeRef.classList.add("d-none")
+}
 
 
 

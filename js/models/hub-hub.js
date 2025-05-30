@@ -231,12 +231,18 @@ class AudioHub {
 class IntervalHub {
     static allIntervals = [];
 
-    static startInterval(func, timer) {
+    static startInterval(func, timer, where) {
+        console.log("is here: " + where)
         const newInterval = setInterval(func, timer);
         IntervalHub.allIntervals.push(newInterval);
     }
 
     static stopAllIntervals() {
+        console.log(IntervalHub.allIntervals.length);
+        
         IntervalHub.allIntervals.forEach(clearInterval);
+
+
+        console.log(IntervalHub.allIntervals.length);
     }
 }

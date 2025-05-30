@@ -11,7 +11,16 @@
 
 canvas {
     background-color: black;
+    display: block;
     margin-bottom: 50px;
+
+    @media (max-width: 760px) {
+        width: 100%;
+    }
+
+    @media (max-height: 480px) {
+        height: 100vh;
+    }
 }
 
 body {
@@ -40,17 +49,31 @@ h1 {
     padding: 10px;
     color: white;
     border-radius: 10px;
+
+    @media (max-width: 800px) {
+        display: none;
+    }
 }
 
 .controls {
     background-color: rgb(136, 16, 22);
     color: white;
     padding: 10px 20px 20px 20px;
-    display: flex;
+    justify-content: center;
+
     flex-direction: column;
     gap: 10px;
     width: 40%;
     border-radius: 10px;
+
+    @media (max-width: 800px) {
+        width: 100%;
+        position: absolute;
+        z-index: 10;
+        width: 300px;
+        top: 100px;
+        left: 100;
+    }
 }
 
 .keyboard {
@@ -70,17 +93,25 @@ h1 {
     background-image: url("assets/img/9_intro_outro_screens/start/startscreen_1.png");
 }
 
+
 .screen {
     position: absolute;
-    height: 100px;
-    width: 100px;
-    z-index: 1000;
-    width: 720px;
+    z-index: 1;
+    width: 760px;
     height: 480px;
     top: 100px;
     background-color: rgb(165, 33, 33);
     background-size: cover;
     background-position: right;
+
+    @media (max-width: 800px) {
+        width: 100%;
+        top: 0;
+    }
+
+    @media (max-height: 480px) {
+        height: 100vh;
+    }
 }
 
 .d-flex {
@@ -107,4 +138,21 @@ button {
 button:hover {
     cursor: pointer;
     background-color: rgb(255, 194, 25);
+}
+
+.x-close {
+    height: 30px;
+    width: 30px;
+    background-color: rgb(73, 48, 42);
+    border-radius: 50%;
+    padding: 5px;
+
+    @media (min-width: 800px) {
+        display: none;
+    }
+}
+
+.x-close:hover {
+    cursor: pointer;
+    background-color: rgb(168, 34, 0);
 }
