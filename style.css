@@ -69,10 +69,11 @@ h1 {
     @media (max-width: 800px) {
         width: 100%;
         position: absolute;
-        z-index: 10;
+        z-index: 20;
         width: 300px;
         top: 100px;
         left: 100;
+        display: none;
     }
 }
 
@@ -93,10 +94,9 @@ h1 {
     background-image: url("assets/img/9_intro_outro_screens/start/startscreen_1.png");
 }
 
-
 .screen {
     position: absolute;
-    z-index: 1;
+    z-index: 30;
     width: 760px;
     height: 480px;
     top: 100px;
@@ -112,14 +112,6 @@ h1 {
     @media (max-height: 480px) {
         height: 100vh;
     }
-}
-
-.d-flex {
-    display: flex;
-}
-
-.d-none {
-    display: none;
 }
 
 button {
@@ -155,4 +147,60 @@ button:hover {
 .x-close:hover {
     cursor: pointer;
     background-color: rgb(168, 34, 0);
+}
+
+.controls-mobile {
+    z-index: 10;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+
+  
+
+    .volume {
+        display: flex;
+        justify-content: flex-end;
+        padding: 20px;
+    }
+    
+    .buttons-bottom {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+
+        .butt {
+        display: flex;
+        gap: 20px;
+    }
+
+        @media (min-width: 760px) {
+        _display: none;
+    }
+    }
+
+    
+
+    img {
+        background-color: rgb(69, 126, 16);
+
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        padding: 5px;
+    }
+
+     img:hover {
+            cursor: pointer;
+            background-color: aqua;
+        }
+}
+
+.d-flex {
+    display: flex;
+}
+
+.d-none {
+    display: none;
 }

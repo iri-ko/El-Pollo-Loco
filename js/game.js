@@ -52,6 +52,39 @@ function makeScreenInvisible(screenID, buttonID){
     buttonRef.classList.add("d-none")
 }
 
+document.getElementById("left").addEventListener("touchstart", () => {
+    keyboard.LEFT = true;
+});
+
+document.getElementById("left").addEventListener("touchend", () => {
+    keyboard.LEFT = false;
+});
+
+document.getElementById("right").addEventListener("touchstart", () => {
+    keyboard.RIGHT = true;
+});
+
+document.getElementById("right").addEventListener("touchend", () => {
+    keyboard.RIGHT = false;
+});
+
+document.getElementById("jump").addEventListener("touchstart", () => {
+    keyboard.SPACE = true;
+});
+
+document.getElementById("jump").addEventListener("touchend", () => {
+    keyboard.SPACE = false;
+});
+
+document.getElementById("throw").addEventListener("touchstart", () => {
+    keyboard.DOWN = true;
+});
+
+document.getElementById("throw").addEventListener("touchend", () => {
+    keyboard.DOWN = false;
+});
+
+
 
 
 window.addEventListener("keydown", (event) => {
