@@ -7,6 +7,7 @@ const worlds = [];
 function startGame(screenID, buttonID) {
     canvas = document.getElementById("canvas");
     resetGameState();
+    initLevel();
     if (worlds.length == 0) {
         worlds.push(new World(canvas, keyboard));
     }
