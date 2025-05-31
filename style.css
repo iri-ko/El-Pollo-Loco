@@ -112,6 +112,7 @@ h1 {
     @media (max-width: 932px) {
         width: 100%;
         top: 0;
+        height: 100vh;
     }
 
     @media (max-height: 500px) {

@@ -7,10 +7,12 @@ const worlds = [];
 function startGame(screenID, buttonID) {
     canvas = document.getElementById("canvas");
     resetGameState();
-    if(worlds.length == 0){
+    if (worlds.length == 0) {
         worlds.push(new World(canvas, keyboard));
     }
     makeScreenInvisible(screenID, buttonID);
+    legalInvisible();
+    playMusic();
 }
 
 function resetGameState() {
@@ -34,22 +36,31 @@ function resetGameState() {
     }
 }
 
-function controlsInvisible(){
-    const closeRef = document.getElementById("controlPanal");
-    closeRef.classList.add("d-none")
+function playMusic() {
+    if (AudioHub.music.paused || AudioHub.music.currentTime === 0) {
+        AudioHub.music.loop = true;
+        AudioHub.music.play(); // Start playing
+    }
+    AudioHub.music.volume = 0.2;
 }
 
+function controlsInvisible() {
+    const closeRef = document.getElementById("controlPanal");
+    closeRef.classList.add("d-none");
+}
 
+function legalInvisible() {
+    const closeRef = document.getElementById("legal");
+    closeRef.classList.add("d-none");
+}
 
-
-
-function makeScreenInvisible(screenID, buttonID){
+function makeScreenInvisible(screenID, buttonID) {
     const screenRef = document.getElementById(`${screenID}`);
     const buttonRef = document.getElementById(`${buttonID}`);
     screenRef.classList.remove("d-flex");
-    screenRef.classList.add("d-none")
+    screenRef.classList.add("d-none");
     buttonRef.classList.remove("d-flex");
-    buttonRef.classList.add("d-none")
+    buttonRef.classList.add("d-none");
 }
 
 document.getElementById("left").addEventListener("touchstart", () => {
@@ -84,50 +95,46 @@ document.getElementById("throw").addEventListener("touchend", () => {
     keyboard.DOWN = false;
 });
 
-
-
-
 window.addEventListener("keydown", (event) => {
-    if (event.keyCode == 39){
-        keyboard.RIGHT = true; 
+    if (event.keyCode == 39) {
+        keyboard.RIGHT = true;
     }
 
-    if (event.keyCode == 37){
+    if (event.keyCode == 37) {
         keyboard.LEFT = true;
     }
 
-    if (event.keyCode == 40){
+    if (event.keyCode == 40) {
         keyboard.DOWN = true;
     }
 
-    if (event.keyCode == 38){
-        keyboard.UP = true;  // 
+    if (event.keyCode == 38) {
+        keyboard.UP = true; //
     }
 
-    if (event.keyCode == 32){
+    if (event.keyCode == 32) {
         keyboard.SPACE = true;
     }
 });
 
-
 window.addEventListener("keyup", (event) => {
-    if (event.keyCode == 39){
+    if (event.keyCode == 39) {
         keyboard.RIGHT = false;
     }
 
-    if (event.keyCode == 37){
+    if (event.keyCode == 37) {
         keyboard.LEFT = false;
     }
 
-    if (event.keyCode == 40){
+    if (event.keyCode == 40) {
         keyboard.DOWN = false;
     }
 
-    if (event.keyCode == 38){
+    if (event.keyCode == 38) {
         keyboard.UP = false;
     }
 
-    if (event.keyCode == 32){
+    if (event.keyCode == 32) {
         keyboard.SPACE = false;
-    }    
+    }
 });

@@ -1,6 +1,7 @@
 class World {
     //#region attributes
     character = new Character();
+    isRunning = true;
 
     level = level1;
 
@@ -24,7 +25,6 @@ class World {
 
     showBossBar = false;
 
-
     //#endregion
 
     constructor(canvas, keyboard) {
@@ -44,13 +44,12 @@ class World {
         this.character.world = this;
     }
 
-    
-
     //#region Draw methods
     draw() {
+        if (!this.isRunning) return;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.addLevelOptics();
-        this.requestAnimation();
+        requestAnimationFrame(() => this.draw());
         this.addChecks();
     }
 
@@ -62,7 +61,11 @@ class World {
     }
 
     addChecks() {
-        IntervalHub.startInterval(this.checkCollisions, 200, "worldCollisioncheck");
+        IntervalHub.startInterval(
+            this.checkCollisions,
+            200,
+            "worldCollisioncheck"
+        );
         this.checkThrowObjects();
     }
 
@@ -115,13 +118,15 @@ class World {
 
                     if (timeSinceLastHit > 1000) {
                         this.character.hit();
+                        AudioHub.playOne(AudioHub.characterHurt);
                         this.healthBar.setPercentage(this.character.energy);
 
                         if (this.character.isDead() && !this.gameOverFlag) {
                             // **Trigger game over**
                             this.gameOverFlag = true;
-
-                            this.gameOver();
+                            setTimeout(() => {
+                                this.gameOver();
+                            }, 1000);
                         }
                     }
                 }
@@ -129,17 +134,22 @@ class World {
         });
     }
 
-gameOver() {
-    IntervalHub.stopAllIntervals();
-    let gameoverScreen = document.getElementById("gameover");
-    let tryAgainButton = document.getElementById("try-again");
+    gameOver() {
+        AudioHub.stopAll();
+        this.isRunning = false;
+        IntervalHub.stopAllIntervals();
+        let gameoverScreen = document.getElementById("gameover");
+        let tryAgainButton = document.getElementById("try-again");
 
-    gameoverScreen.classList.remove("d-none");
-    gameoverScreen.classList.add("d-flex")
-    tryAgainButton.classList.remove("d-none"); // **Ensure button is visible**
-    tryAgainButton.style.display = "block"; // **Guarantees it appears**
-}
+        gameoverScreen.classList.remove("d-none");
+        gameoverScreen.classList.add("d-flex");
+        tryAgainButton.classList.remove("d-none"); // **Ensure button is visible**
+        tryAgainButton.style.display = "block"; // **Guarantees it appears**
 
+        setTimeout(() => {
+            AudioHub.playOne(AudioHub.characterDead);
+        }, 500);
+    }
 
     checkCharacterCoinCollision() {
         this.level.coins.forEach((coin, index) => {
@@ -162,9 +172,9 @@ gameOver() {
             if (this.character.isColliding(bottle)) {
                 AudioHub.playOne(AudioHub.bottleCollect);
                 this.character.bottleCounter++;
-                this.level.salsaBottles.splice(index, 1); 
+                this.level.salsaBottles.splice(index, 1);
                 let newPercentage = Math.min(
-                    (this.character.bottleCounter / 5) * 100 
+                    (this.character.bottleCounter / 5) * 100
                 );
 
                 this.bottleBar.setPercentage(newPercentage);
@@ -193,44 +203,51 @@ gameOver() {
     }
 
     checkThrowCollision() {
-    this.throwableObjects.forEach((bottle) => {
-        this.level.enemies.forEach((enemy) => {
-            if (
-                (enemy instanceof Chicken || enemy instanceof BabyChick) &&
-                bottle.isColliding(enemy) &&
-                !this.enemyFlag
-            ) {
-                AudioHub.playOne(AudioHub.bottleSplash);
-                this.enemyHit(enemy, bottle);
-                this.handleEnemyFlag();
-            } else if (
-                enemy instanceof Endboss &&
-                bottle.isColliding(enemy) &&
-                !this.bossFlag
-            ) {
-                AudioHub.playOne(AudioHub.bottleSplash);
-                this.bossHit(enemy, bottle);
-                this.handleBossFlag();
+        this.throwableObjects.forEach((bottle) => {
+            this.level.enemies.forEach((enemy) => {
+                if (
+                    (enemy instanceof Chicken || enemy instanceof BabyChick) &&
+                    bottle.isColliding(enemy) &&
+                    !this.enemyFlag
+                ) {
+                    AudioHub.playOne(AudioHub.bottleSplash);
+                    this.enemyHit(enemy, bottle);
+                    this.handleEnemyFlag();
+                } else if (
+                    enemy instanceof Endboss &&
+                    bottle.isColliding(enemy) &&
+                    !this.bossFlag
+                ) {
+                    AudioHub.playOne(AudioHub.bottleSplash);
+                    this.bossHit(enemy, bottle);
+                    this.handleBossFlag();
+                    AudioHub.playOne(AudioHub.angryChicken);
 
-                if (enemy.energy <= 0 && !this.winFlag) {
-                    this.winGame();
-                } 
-            }
+                    if (enemy.energy <= 0 && !this.winFlag) {
+                        setTimeout(() => {
+                            this.winGame();
+                        }, 500);
+                    }
+                }
+            });
         });
-    });
-}
-
+    }
 
     winGame() {
-    IntervalHub.stopAllIntervals();
+        AudioHub.stopAll();
+        this.isRunning = false;
+        IntervalHub.stopAllIntervals();
 
-
-    document.getElementById("win").classList.remove("d-none"); // Show win screen
-    document.getElementById("win").classList.add("d-flex");
-    document.getElementById("play-again").classList.remove("d-none"); // Show button
-    document.getElementById("play-again").style.display = "block"; // Ensure visibility
-}
-
+        document.getElementById("win").classList.remove("d-none"); // Show win screen
+        document.getElementById("win").classList.add("d-flex");
+        document.getElementById("play-again").classList.remove("d-none"); // Show button
+        document.getElementById("play-again").style.display = "block"; // Ensure visibility
+        
+        setTimeout(() => {
+            AudioHub.playOne(AudioHub.win);
+        }, 500);
+    
+    }
 
     enemyHit(enemy, bottle) {
         enemy.die();

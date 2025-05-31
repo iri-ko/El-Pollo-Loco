@@ -180,14 +180,17 @@ class ImageHub {
 }
 
 class AudioHub {
-
-    static bottleCollect = new Audio('audio/bottle_collect.mp3');
-    static coinCollect = new Audio ('audio/coin.mp3'); 
-    static jumpKill = new Audio ('audio/jumpkill.mp3');
-    static bottleSpin = new Audio ('audio/bottle_spin.mp3');
-    static bottleSplash = new Audio ('audio/bottle_splash.mp3');
-    static characterHurt = new Audio ('audio/character_hurt.mp3');
-    static bossAttack = new Audio ('audio/terminating.mp3');
+    static bottleCollect = new Audio("audio/bottle_collect.mp3");
+    static coinCollect = new Audio("audio/coin.mp3");
+    static jumpKill = new Audio("audio/jumpkill.mp3");
+    static bottleSpin = new Audio("audio/bottle_spin.mp3");
+    static bottleSplash = new Audio("audio/bottle_splash.mp3");
+    static characterHurt = new Audio("audio/character_hurt.mp3");
+    static bossAttack = new Audio("audio/terminating.mp3");
+    static music = new Audio ("audio/music.mp3");
+    static characterDead = new Audio ("audio/game_over.mp3");
+    static win = new Audio ("audio/Win.mp3");
+    static angryChicken = new Audio ("audio/chicken_angry.mp3")
 
     static allSounds = [
         AudioHub.bottleCollect,
@@ -197,34 +200,34 @@ class AudioHub {
         AudioHub.bottleSplash,
         AudioHub.characterHurt,
         AudioHub.bossAttack,
+        AudioHub.music,
+        AudioHub.characterDead, 
+        AudioHub.win,
 
     ];
 
-
     // Spielt eine einzelne Audiodatei ab
-    static playOne(sound) {  
-        sound.volume = 0.2;  // Setzt die Lautstärke auf 0.2 = 20% / 1 = 100%
-        sound.currentTime = 0;  // Startet ab einer bestimmten stelle (0=Anfang/ 5 = 5 sec.)
-        sound.play();  // Spielt das übergebene Sound-Objekt ab
+    static playOne(sound) {
+        sound.volume = 0.2; // Setzt die Lautstärke auf 0.2 = 20% / 1 = 100%
+        sound.currentTime = 0; // Startet ab einer bestimmten stelle (0=Anfang/ 5 = 5 sec.)
+        sound.play(); // Spielt das übergebene Sound-Objekt ab
     }
-
 
     // Stoppt das Abspielen aller Audiodateien
     static stopAll() {
-        AudioHub.allSounds.forEach(sound => {
-            sound.pause();  // Pausiert jedes Audio in der Liste
+        AudioHub.allSounds.forEach((sound) => {
+            sound.pause(); // Pausiert jedes Audio in der Liste
         });
-        document.getElementById('volume').value = 0.2;  // Setzt den Sound-Slider wieder auf 0.2
-        const instrumentImages = document.querySelectorAll('.sound_img'); // nur wichtig für die Visualisierung
-        instrumentImages.forEach(img => img.classList.remove('active')); // nur wichtig für die Visualisierung
+        document.getElementById("volume").value = 0.2; // Setzt den Sound-Slider wieder auf 0.2
+        const instrumentImages = document.querySelectorAll(".sound_img"); // nur wichtig für die Visualisierung
+        instrumentImages.forEach((img) => img.classList.remove("active")); // nur wichtig für die Visualisierung
     }
-
 
     // Stoppt das Abspielen einer einzelnen Audiodatei
     static stopOne(sound, instrumentId) {
-        sound.pause();  // Pausiert das übergebene Audio
+        sound.pause(); // Pausiert das übergebene Audio
         const instrumentImg = document.getElementById(instrumentId); // nur wichtig für die Visualisierung
-        instrumentImg.classList.remove('active'); // nur wichtig für die Visualisierung
+        instrumentImg.classList.remove("active"); // nur wichtig für die Visualisierung
     }
 }
 
@@ -232,16 +235,16 @@ class IntervalHub {
     static allIntervals = [];
 
     static startInterval(func, timer, where) {
-        console.log("is here: " + where)
+        console.log("is here: " + where);
         const newInterval = setInterval(func, timer);
         IntervalHub.allIntervals.push(newInterval);
     }
 
     static stopAllIntervals() {
         console.log(IntervalHub.allIntervals.length);
-        
-        IntervalHub.allIntervals.forEach(clearInterval);
 
+        IntervalHub.allIntervals.forEach(clearInterval);
+        IntervalHub.allIntervals = [];
 
         console.log(IntervalHub.allIntervals.length);
     }
