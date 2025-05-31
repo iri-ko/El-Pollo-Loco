@@ -309,7 +309,7 @@ gameOver() {
             this.flipImage(mo);
         }
 
-        mo.drawObject(this.ctx);
+        mo.draw(this.ctx);
         mo.drawHitbox(this.ctx);
 
         if (mo.otherDirection) {
