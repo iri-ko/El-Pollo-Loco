@@ -180,7 +180,6 @@ class ImageHub {
 }
 
 class AudioHub {
-
     static volumeOn = true;
 
     static bottleCollect = new Audio("audio/bottle_collect.mp3");
@@ -190,10 +189,10 @@ class AudioHub {
     static bottleSplash = new Audio("audio/bottle_splash.mp3");
     static characterHurt = new Audio("audio/character_hurt.mp3");
     static bossAttack = new Audio("audio/terminating.mp3");
-    static music = new Audio ("audio/music.mp3");
-    static characterDead = new Audio ("audio/game_over.mp3");
-    static win = new Audio ("audio/Win.mp3");
-    static angryChicken = new Audio ("audio/chicken_angry.mp3")
+    static music = new Audio("audio/music.mp3");
+    static characterDead = new Audio("audio/game_over.mp3");
+    static win = new Audio("audio/Win.mp3");
+    static angryChicken = new Audio("audio/chicken_angry.mp3");
 
     static allSounds = [
         AudioHub.bottleCollect,
@@ -204,14 +203,13 @@ class AudioHub {
         AudioHub.characterHurt,
         AudioHub.bossAttack,
         AudioHub.music,
-        AudioHub.characterDead, 
+        AudioHub.characterDead,
         AudioHub.win,
-
     ];
 
     // Spielt eine einzelne Audiodatei ab
     static playOne(sound) {
-        if (AudioHub.volumeOn){
+        if (AudioHub.volumeOn) {
             sound.volume = 0.2;
         } else {
             sound.volume = 0;
@@ -237,15 +235,14 @@ class AudioHub {
         instrumentImg.classList.remove("active"); // nur wichtig für die Visualisierung
     }
 
-   static toggleVolume() {
-    this.volumeOn = !this.volumeOn;
+    static toggleVolume() {
+        this.volumeOn = !this.volumeOn;
 
-    // Adjust volume for all currently playing sounds
-    AudioHub.allSounds.forEach(sound => {
-        sound.volume = this.volumeOn ? 0.2 : 0; 
-    });
-}
-
+        // Adjust volume for all currently playing sounds
+        AudioHub.allSounds.forEach((sound) => {
+            sound.volume = this.volumeOn ? 0.2 : 0;
+        });
+    }
 }
 
 class IntervalHub {

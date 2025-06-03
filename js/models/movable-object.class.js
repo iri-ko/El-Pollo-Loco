@@ -74,8 +74,7 @@ hit() {
     //#region hurt/dead
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit;
-        return timePassed < 1000;
-        //animation plays for 1 second after hit
+        return timePassed < 250;
     }
 
     isDead() {
