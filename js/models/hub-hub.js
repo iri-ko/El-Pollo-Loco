@@ -180,6 +180,9 @@ class ImageHub {
 }
 
 class AudioHub {
+
+    static volumeOn = true;
+
     static bottleCollect = new Audio("audio/bottle_collect.mp3");
     static coinCollect = new Audio("audio/coin.mp3");
     static jumpKill = new Audio("audio/jumpkill.mp3");
@@ -208,7 +211,11 @@ class AudioHub {
 
     // Spielt eine einzelne Audiodatei ab
     static playOne(sound) {
-        sound.volume = 0.2; // Setzt die Lautstärke auf 0.2 = 20% / 1 = 100%
+        if (AudioHub.volumeOn){
+            sound.volume = 0.2;
+        } else {
+            sound.volume = 0;
+        }
         sound.currentTime = 0; // Startet ab einer bestimmten stelle (0=Anfang/ 5 = 5 sec.)
         sound.play(); // Spielt das übergebene Sound-Objekt ab
     }
@@ -229,6 +236,16 @@ class AudioHub {
         const instrumentImg = document.getElementById(instrumentId); // nur wichtig für die Visualisierung
         instrumentImg.classList.remove("active"); // nur wichtig für die Visualisierung
     }
+
+   static toggleVolume() {
+    this.volumeOn = !this.volumeOn;
+
+    // Adjust volume for all currently playing sounds
+    AudioHub.allSounds.forEach(sound => {
+        sound.volume = this.volumeOn ? 0.2 : 0; 
+    });
+}
+
 }
 
 class IntervalHub {

@@ -53,12 +53,12 @@ class World {
         this.addChecks();
     }
 
-    requestAnimation() {
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
-    }
+    // requestAnimation() {
+    //     let self = this;
+    //     requestAnimationFrame(function () {
+    //         self.draw();
+    //     });
+    // }
 
     addChecks() {
         IntervalHub.startInterval(

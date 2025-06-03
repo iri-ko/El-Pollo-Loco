@@ -42,7 +42,12 @@ function playMusic() {
         AudioHub.music.loop = true;
         AudioHub.music.play(); // Start playing
     }
-    AudioHub.music.volume = 0.2;
+
+    if (AudioHub.volumeOn){
+            AudioHub.music.volume = 0.2;
+        } else {
+            AudioHub.music.volume = 0;
+        }
 }
 
 function controlsInvisible() {

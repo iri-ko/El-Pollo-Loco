@@ -46,7 +46,7 @@ class Endboss extends MovableObject {
     jumpForward() {
         if (!this.forwardFlag) {
             this.y -= 30;
-            this.x -= 50;
+            this.x -= 30;
             this.forwardFlag = true;
         }
 
