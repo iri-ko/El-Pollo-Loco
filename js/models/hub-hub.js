@@ -1,3 +1,7 @@
+/**
+ * static class that stores file paths for all game images, including characters, enemies, objects, and UI elements.
+ * @class
+ */
 class ImageHub {
     static character = {
         walk: [
@@ -179,7 +183,12 @@ class ImageHub {
     };
 }
 
+/**
+ * A static class that manages in-game audio effects and music.
+ * @class
+ */
 class AudioHub {
+    //#region variables
     static volumeOn = true;
 
     static bottleCollect = new Audio("audio/bottle_collect.mp3");
@@ -207,59 +216,77 @@ class AudioHub {
         AudioHub.win,
     ];
 
-    // Spielt eine einzelne Audiodatei ab
+    //#endregion
+
+    /**
+     * Plays specific sound effect.
+     * Resets playback position and adjusts volume based on `volumeOn` setting.
+     * @param {HTMLAudioElement} sound - The sound effect to play.
+     */
     static playOne(sound) {
         if (AudioHub.volumeOn) {
             sound.volume = 0.2;
         } else {
             sound.volume = 0;
         }
-        sound.currentTime = 0; // Startet ab einer bestimmten stelle (0=Anfang/ 5 = 5 sec.)
-        sound.play(); // Spielt das übergebene Sound-Objekt ab
+        sound.currentTime = 0;
+        sound.play();
     }
 
-    // Stoppt das Abspielen aller Audiodateien
+    /**
+     * Stops all sound effects and resets volume control.
+     */
     static stopAll() {
         AudioHub.allSounds.forEach((sound) => {
-            sound.pause(); // Pausiert jedes Audio in der Liste
+            sound.pause();
         });
-        document.getElementById("volume").value = 0.2; // Setzt den Sound-Slider wieder auf 0.2
-        const instrumentImages = document.querySelectorAll(".sound_img"); // nur wichtig für die Visualisierung
-        instrumentImages.forEach((img) => img.classList.remove("active")); // nur wichtig für die Visualisierung
+        document.getElementById("volume").value = 0.2;
     }
 
-    // Stoppt das Abspielen einer einzelnen Audiodatei
-    static stopOne(sound, instrumentId) {
-        sound.pause(); // Pausiert das übergebene Audio
-        const instrumentImg = document.getElementById(instrumentId); // nur wichtig für die Visualisierung
-        instrumentImg.classList.remove("active"); // nur wichtig für die Visualisierung
+    static stopOne(sound) {
+        sound.pause();
     }
 
+    /**
+     * Toggles the game's audio on or off and updates volume for all sounds.
+     */
     static toggleVolume() {
         this.volumeOn = !this.volumeOn;
-
-        // Adjust volume for all currently playing sounds
         AudioHub.allSounds.forEach((sound) => {
             sound.volume = this.volumeOn ? 0.2 : 0;
         });
     }
 }
 
+/**
+ * A static class that manages all intervals in the game.
+ * Provides methods to start and stop intervals efficiently.
+ */
 class IntervalHub {
+    /**
+     * Stores all active interval IDs for tracking and management.
+     * @type {number[]}
+     */
     static allIntervals = [];
 
+    /**
+     * Starts an interval for a specified function and stores its ID.
+     * 
+     * @param {Function} func - The function to execute at each interval.
+     * @param {number} timer - The time delay in milliseconds between function executions.
+     * @param {string} where - A debug identifier indicating where the interval is used.
+     */
     static startInterval(func, timer, where) {
-        console.log("is here: " + where);
         const newInterval = setInterval(func, timer);
         IntervalHub.allIntervals.push(newInterval);
     }
 
+    /**
+     * Stops all active intervals and clears the stored interval IDs.
+     */
     static stopAllIntervals() {
-        console.log(IntervalHub.allIntervals.length);
-
         IntervalHub.allIntervals.forEach(clearInterval);
         IntervalHub.allIntervals = [];
-
-        console.log(IntervalHub.allIntervals.length);
     }
 }
+

@@ -29,7 +29,7 @@ class Coin extends DrawableObject {
     width = 100;
 
     /**
-     * Offset values used for collision detection.
+     * Hitbox (offset) values
      * @type {Object}
      * @property {number} top - Top offset.
      * @property {number} bottom - Bottom offset.

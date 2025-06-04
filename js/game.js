@@ -1,14 +1,39 @@
+/**
+ * The game canvas element.
+ * @type {HTMLCanvasElement}
+ */
 let canvas;
+
+/**
+ * The main game world instance.
+ * @type {World}
+ */
 let world;
+
+/**
+ * The keyboard input manager for player controls.
+ * @type {Keyboard}
+ */
 let keyboard = new Keyboard();
 
+/**
+ * Array storing active world instances.
+ * @type {World[]}
+ */
 const worlds = [];
 
+/**
+ * Initializes and starts the game.
+ * Sets up the canvas, resets game state, and prepares the level.
+ *
+ * @param {string} screenID - The ID of the screen to hide.
+ * @param {string} buttonID - The ID of the button to hide.
+ */
 function startGame(screenID, buttonID) {
     canvas = document.getElementById("canvas");
     resetGameState();
     initLevel();
-    if (worlds.length == 0) {
+    if (worlds.length === 0) {
         worlds.push(new World(canvas, keyboard));
     }
     makeScreenInvisible(screenID, buttonID);
@@ -16,59 +41,58 @@ function startGame(screenID, buttonID) {
     playMusic();
 }
 
+/**
+ * Resets the game state by replacing the current world instance.
+ */
 function resetGameState() {
-    if (worlds.length == 1) {
+    if (worlds.length === 1) {
         worlds.splice(0, 1, new World(canvas, keyboard));
-
-        // world.gameOverFlag = false;
-        // world.showBossBar = false;
-
-        // // Reset player stats
-        // world.character.energy = 100;
-        // world.character.coinCounter = 0;
-        // world.character.bottleCounter = 0;
-
-        // // Reset enemy health
-        // world.level.enemies.forEach((enemy) => {
-        //     if (enemy instanceof Endboss) {
-        //         enemy.energy = 100;
-        //     }
-        // });
     }
 }
 
+/**
+ * Plays background music if not already playing.
+ * Ensures volume is adjusted based on settings.
+ */
 function playMusic() {
     if (AudioHub.music.paused || AudioHub.music.currentTime === 0) {
         AudioHub.music.loop = true;
-        AudioHub.music.play(); // Start playing
+        AudioHub.music.play();
     }
 
-    if (AudioHub.volumeOn){
-            AudioHub.music.volume = 0.2;
-        } else {
-            AudioHub.music.volume = 0;
-        }
+    AudioHub.music.volume = AudioHub.volumeOn ? 0.2 : 0;
 }
 
+/**
+ * Hides the game controls panel.
+ */
 function controlsInvisible() {
-    const closeRef = document.getElementById("controlPanal");
-    closeRef.classList.add("d-none");
+    document.getElementById("controlPanal").classList.add("d-none");
 }
 
+/**
+ * Hides the legal information section.
+ */
 function legalInvisible() {
-    const closeRef = document.getElementById("legal");
-    closeRef.classList.add("d-none");
+    document.getElementById("legal").classList.add("d-none");
 }
 
+/**
+ * Hides a given screen and button by modifying their visibility.
+ *
+ * @param {string} screenID - The ID of the screen to hide.
+ * @param {string} buttonID - The ID of the button to hide.
+ */
 function makeScreenInvisible(screenID, buttonID) {
-    const screenRef = document.getElementById(`${screenID}`);
-    const buttonRef = document.getElementById(`${buttonID}`);
+    const screenRef = document.getElementById(screenID);
+    const buttonRef = document.getElementById(buttonID);
     screenRef.classList.remove("d-flex");
     screenRef.classList.add("d-none");
     buttonRef.classList.remove("d-flex");
     buttonRef.classList.add("d-none");
 }
 
+//#region Touch Controls
 document.getElementById("left").addEventListener("touchstart", () => {
     keyboard.LEFT = true;
 });
@@ -100,47 +124,46 @@ document.getElementById("throw").addEventListener("touchstart", () => {
 document.getElementById("throw").addEventListener("touchend", () => {
     keyboard.DOWN = false;
 });
+//#endregion
 
+//#region Keyboard Controls
 window.addEventListener("keydown", (event) => {
-    if (event.keyCode == 39) {
-        keyboard.RIGHT = true;
-    }
-
-    if (event.keyCode == 37) {
-        keyboard.LEFT = true;
-    }
-
-    if (event.keyCode == 40) {
-        keyboard.DOWN = true;
-    }
-
-    if (event.keyCode == 38) {
-        keyboard.UP = true; //
-    }
-
-    if (event.keyCode == 32) {
-        keyboard.SPACE = true;
+    switch (event.keyCode) {
+        case 39:
+            keyboard.RIGHT = true;
+            break;
+        case 37:
+            keyboard.LEFT = true;
+            break;
+        case 40:
+            keyboard.DOWN = true;
+            break;
+        case 38:
+            keyboard.UP = true;
+            break;
+        case 32:
+            keyboard.SPACE = true;
+            break;
     }
 });
 
 window.addEventListener("keyup", (event) => {
-    if (event.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
-
-    if (event.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
-
-    if (event.keyCode == 40) {
-        keyboard.DOWN = false;
-    }
-
-    if (event.keyCode == 38) {
-        keyboard.UP = false;
-    }
-
-    if (event.keyCode == 32) {
-        keyboard.SPACE = false;
+    switch (event.keyCode) {
+        case 39:
+            keyboard.RIGHT = false;
+            break;
+        case 37:
+            keyboard.LEFT = false;
+            break;
+        case 40:
+            keyboard.DOWN = false;
+            break;
+        case 38:
+            keyboard.UP = false;
+            break;
+        case 32:
+            keyboard.SPACE = false;
+            break;
     }
 });
+//#endregion
