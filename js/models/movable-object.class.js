@@ -18,7 +18,7 @@ class MovableObject extends DrawableObject {
             this.y -= this.speedY;
             this.speedY -= this.acceleration;
         } else {
-            this.speedY = 0; // speed stays 0 once grounded (to avoid triggering jumpKill when not jumping)
+            this.speedY = 0; 
         }
     };
 

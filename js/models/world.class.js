@@ -3,7 +3,7 @@ class World {
     character = new Character();
     isRunning = true;
 
-    level = new Level();
+    level = new Level;
 
     ctx;
     canvas;
