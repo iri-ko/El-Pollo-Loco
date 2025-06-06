@@ -72,6 +72,7 @@ function showStartScreen(screenID, buttonID) {
     const startButtonRef = document.getElementById("start-game");
     startButtonRef.classList.add("d-flex");
     startButtonRef.classList.remove("d-none");
+    legalVisible();
 }
 
 /**
@@ -86,6 +87,11 @@ function controlsInvisible() {
  */
 function legalInvisible() {
     document.getElementById("legal").classList.add("d-none");
+}
+
+function legalVisible(){
+    document.getElementById("legal").classList.remove("d-none");
+    document.getElementById("legal").classList.add("d-flex");
 }
 
 /**
