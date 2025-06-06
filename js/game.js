@@ -59,7 +59,8 @@ function playMusic() {
         AudioHub.music.loop = true;
         AudioHub.music.play();
     }
-
+    
+    AudioHub.initializeAudioSettings();
     AudioHub.music.volume = AudioHub.volumeOn ? 0.2 : 0;
 }
 

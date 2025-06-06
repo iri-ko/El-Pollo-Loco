@@ -252,10 +252,24 @@ class AudioHub {
      */
     static toggleVolume() {
         this.volumeOn = !this.volumeOn;
+        localStorage.setItem("volumeOn", JSON.stringify(this.volumeOn)); 
+
         AudioHub.allSounds.forEach((sound) => {
             sound.volume = this.volumeOn ? 0.2 : 0;
         });
     }
+
+    static initializeAudioSettings() {
+    const storedVolume = localStorage.getItem("volumeOn");
+    if (storedVolume !== null) {
+        this.volumeOn = JSON.parse(storedVolume); 
+    }
+
+    AudioHub.allSounds.forEach((sound) => {
+        sound.volume = this.volumeOn ? 0.2 : 0;
+    });
+}
+
 }
 
 /**
@@ -271,7 +285,7 @@ class IntervalHub {
 
     /**
      * Starts an interval for a specified function and stores its ID.
-     * 
+     *
      * @param {Function} func - The function to execute at each interval.
      * @param {number} timer - The time delay in milliseconds between function executions.
      * @param {string} where - A debug identifier indicating where the interval is used.
@@ -289,4 +303,3 @@ class IntervalHub {
         IntervalHub.allIntervals = [];
     }
 }
-

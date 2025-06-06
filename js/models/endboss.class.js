@@ -94,7 +94,7 @@ class Endboss extends MovableObject {
         } else if (distance <= 150) {
             this.playAnimation(ImageHub.endboss.attack);
             this.jumpForward();
-        } else if (distance <= 400) {
+        } else if (distance <= 600) {
             this.playAnimation(ImageHub.endboss.walk);
             this.x -= this.speed;
         } else {
