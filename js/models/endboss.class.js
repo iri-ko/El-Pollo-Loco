@@ -118,6 +118,5 @@ class Endboss extends MovableObject {
     }
 }
 
-
     //#endregion
 }

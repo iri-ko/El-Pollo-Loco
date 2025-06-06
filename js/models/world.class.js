@@ -139,9 +139,7 @@ class World {
      * Adds periodic game checks for collisions and object interactions.
      */
     addChecks() {
-        IntervalHub.startInterval(
-            this.checkCollisions,
-            200,        );
+        IntervalHub.startInterval(this.checkCollisions, 200);
         this.checkThrowObjects();
     }
 
@@ -316,29 +314,51 @@ class World {
     checkThrowCollision() {
         this.throwableObjects.forEach((bottle) => {
             this.level.enemies.forEach((enemy) => {
-                if (
-                    (enemy instanceof Chicken || enemy instanceof BabyChick) &&
-                    bottle.isColliding(enemy) &&
-                    !this.enemyFlag
-                ) {
+                if (this.throwBottleHitsChicken(enemy, bottle)) {
                     AudioHub.playOne(AudioHub.bottleSplash);
                     this.enemyHit(enemy, bottle);
                     this.handleEnemyFlag();
-                } else if (
-                    enemy instanceof Endboss &&
-                    bottle.isColliding(enemy) &&
-                    !this.bossFlag
-                ) {
-                    AudioHub.playOne(AudioHub.bottleSplash);
+                } else if (this.throwBottleHitsEndboss(enemy, bottle)) {
+                    this.playSoundOfBottleHittingEnemy();
                     this.bossHit(enemy, bottle);
                     this.handleBossFlag();
-                    AudioHub.playOne(AudioHub.angryChicken);
-                    if (enemy.energy <= 0 && !this.winFlag) {
-                        setTimeout(() => this.winGame(), 500);
-                    }
+                    this.handleWinFlag(enemy);
                 }
             });
         });
+    }
+
+    /**
+     * Condition for if a bottle hits a small enemy
+     */
+    throwBottleHitsChicken(enemy, bottle) {
+        return (
+            (enemy instanceof Chicken || enemy instanceof BabyChick) &&
+            bottle.isColliding(enemy) &&
+            !this.enemyFlag
+        );
+    }
+
+    /**
+     * Condition for if a bottle hits the endboss
+     */
+    throwBottleHitsEndboss(enemy, bottle) {
+        return (
+            enemy instanceof Endboss &&
+            bottle.isColliding(enemy) &&
+            !this.bossFlag
+        );
+    }
+
+    playSoundOfBottleHittingEnemy() {
+        AudioHub.playOne(AudioHub.bottleSplash);
+        AudioHub.playOne(AudioHub.angryChicken);
+    }
+
+    handleWinFlag(enemy) {
+        if (enemy.energy <= 0 && !this.winFlag) {
+            setTimeout(() => this.winGame(), 500);
+        }
     }
 
     /**
