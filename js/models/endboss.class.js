@@ -106,18 +106,18 @@ class Endboss extends MovableObject {
      * Makes Endboss jump forward once, modifying its position.
      */
     jumpForward() {
-        if (!this.forwardFlag) {
-            this.y -= 30;
-            this.x -= 30;
-            this.forwardFlag = true;
-        }
+    if (!this.forwardFlag) {
+        this.y -= 30; 
+        this.x -= 30; 
+        this.forwardFlag = true;
+
         setTimeout(() => {
-            this.y += 30;
-        }, 300);
-        setTimeout(() => {
-            this.forwardFlag = false;
+            this.y += 30;  
+            this.forwardFlag = false; 
         }, 300);
     }
+}
+
 
     //#endregion
 }
