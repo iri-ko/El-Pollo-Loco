@@ -49,6 +49,12 @@
                 >
                     Try again
                 </button>
+                <button
+                    onclick="showStartScreen('gameover', 'try-again')"
+                    id="back-to-menu"
+                >
+                    Back to start menu
+                </button>
             </div>
 
             <div class="win-screen screen d-none" id="win">
@@ -57,6 +63,13 @@
                     id="play-again"
                 >
                     Play again
+                </button>
+
+                <button
+                    onclick="showStartScreen('win', 'play-again')"
+                    id="back-to-menu"
+                >
+                    Back to start menu
                 </button>
             </div>
 
@@ -108,7 +121,7 @@
             </div>
 
             <div id="horizontal" class="horizontal">
-                Please play in horizontal mode!
+                Please rotate your phone!
             </div>
 
             <div class="legal" id="legal">

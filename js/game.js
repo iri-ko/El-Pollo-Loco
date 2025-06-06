@@ -59,9 +59,19 @@ function playMusic() {
         AudioHub.music.loop = true;
         AudioHub.music.play();
     }
-    
+
     AudioHub.initializeAudioSettings();
     AudioHub.music.volume = AudioHub.volumeOn ? 0.2 : 0;
+}
+
+function showStartScreen(screenID, buttonID) {
+    makeScreenInvisible(screenID, buttonID);
+    const startRef = document.getElementById("start");
+    startRef.classList.add("d-flex");
+    startRef.classList.remove("d-none");
+    const startButtonRef = document.getElementById("start-game");
+    startButtonRef.classList.add("d-flex");
+    startButtonRef.classList.remove("d-none");
 }
 
 /**

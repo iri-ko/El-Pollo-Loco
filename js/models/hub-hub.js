@@ -252,24 +252,31 @@ class AudioHub {
      */
     static toggleVolume() {
         this.volumeOn = !this.volumeOn;
-        localStorage.setItem("volumeOn", JSON.stringify(this.volumeOn)); 
+        localStorage.setItem("volumeOn", JSON.stringify(this.volumeOn));
+
+        AudioHub.allSounds.forEach((sound) => {
+            sound.volume = this.volumeOn ? 0.2 : 0;
+        });
+
+        const muteButtonRef = document.getElementById("volume");
+
+        if (this.volumeOn === true) {
+            muteButtonRef.src = "assets/icons/volume-full.png";
+        } else if (this.volumeOn === false) {
+            muteButtonRef.src = "assets/icons/volume-mute.png";
+        }
+    }
+
+    static initializeAudioSettings() {
+        const storedVolume = localStorage.getItem("volumeOn");
+        if (storedVolume !== null) {
+            this.volumeOn = JSON.parse(storedVolume);
+        }
 
         AudioHub.allSounds.forEach((sound) => {
             sound.volume = this.volumeOn ? 0.2 : 0;
         });
     }
-
-    static initializeAudioSettings() {
-    const storedVolume = localStorage.getItem("volumeOn");
-    if (storedVolume !== null) {
-        this.volumeOn = JSON.parse(storedVolume); 
-    }
-
-    AudioHub.allSounds.forEach((sound) => {
-        sound.volume = this.volumeOn ? 0.2 : 0;
-    });
-}
-
 }
 
 /**

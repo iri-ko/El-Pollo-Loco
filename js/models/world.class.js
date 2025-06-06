@@ -141,9 +141,7 @@ class World {
     addChecks() {
         IntervalHub.startInterval(
             this.checkCollisions,
-            200,
-            "worldCollisioncheck"
-        );
+            200,        );
         this.checkThrowObjects();
     }
 
