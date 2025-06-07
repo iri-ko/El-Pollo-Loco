@@ -258,8 +258,11 @@ class AudioHub {
             sound.volume = this.volumeOn ? 0.2 : 0;
         });
 
-        const muteButtonRef = document.getElementById("volume");
+        AudioHub.volumeImage();
+    }
 
+    static volumeImage() {
+        const muteButtonRef = document.getElementById("volume");
         if (this.volumeOn === true) {
             muteButtonRef.src = "assets/icons/volume-full.png";
         } else if (this.volumeOn === false) {
@@ -272,7 +275,7 @@ class AudioHub {
         if (storedVolume !== null) {
             this.volumeOn = JSON.parse(storedVolume);
         }
-
+        AudioHub.volumeImage();
         AudioHub.allSounds.forEach((sound) => {
             sound.volume = this.volumeOn ? 0.2 : 0;
         });

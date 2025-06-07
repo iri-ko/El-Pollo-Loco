@@ -11,7 +11,7 @@
             href="assets/img/3_enemies_chicken/chicken_normal/1_walk/w1_w.png"
         />
     </head>
-    <body>
+    <body onload="AudioHub.initializeAudioSettings()">
         <div class="content">
             <h1>El Pollo Loco</h1>
 
@@ -60,7 +60,7 @@
             <div class="win-screen screen d-none" id="win">
                 <button
                     onclick="startGame('win', 'play-again')"
-                    id="play-again"
+                    id="play-again"udioHub.volumeImage();
                 >
                     Play again
                 </button>
@@ -87,7 +87,7 @@
                     <img 
                     onclick="AudioHub.toggleVolume()"
                         id="volume"
-                        src="./assets/icons/volume-mute.png"
+                        src="."
                         alt=""
                     />
                 </div>
